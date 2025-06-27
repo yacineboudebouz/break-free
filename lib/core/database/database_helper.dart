@@ -122,115 +122,14 @@ class DatabaseHelper {
     try {
       AppLogger.info('Seeding initial data...');
 
-      // Seed sample articles
-      await _seedArticles(db);
+      // Note: Articles will be seeded by the ArticleLocalDataSource
+      // when the app starts for the first time
 
-      AppLogger.info('Initial data seeded successfully');
+      AppLogger.info('Initial data setup completed');
     } catch (e, stackTrace) {
       AppLogger.error('Failed to seed initial data', e, stackTrace);
       // Don't throw here as this is not critical for app functionality
     }
-  }
-
-  /// Seed sample articles
-  Future<void> _seedArticles(Database db) async {
-    final articles = [
-      {
-        DatabaseConstants.articlesTitle: 'The Power of Habit Formation',
-        DatabaseConstants.articlesContent: '''
-Habits are the compound interest of self-improvement. The same way that money multiplies through compound interest, the effects of your habits multiply as you repeat them.
-
-Understanding the habit loop - cue, routine, reward - is crucial for building good habits and breaking bad ones. Every habit follows this simple neurological loop.
-
-Key strategies for habit formation:
-1. Start small - Focus on tiny habits that are easy to maintain
-2. Stack habits - Link new habits to existing ones
-3. Create environmental cues - Make good habits obvious
-4. Track your progress - What gets measured gets managed
-5. Celebrate small wins - Reward yourself for consistency
-
-Remember: You don't rise to the level of your goals, you fall to the level of your systems.
-        ''',
-        DatabaseConstants.articlesAuthor: 'Habit Expert',
-        DatabaseConstants.articlesCategory: 'Habit Formation',
-        DatabaseConstants.articlesCreatedAt: DateTime.now().toIso8601String(),
-        DatabaseConstants.articlesIsFavorite: 0,
-      },
-      {
-        DatabaseConstants.articlesTitle:
-            'Breaking Bad Habits: A Scientific Approach',
-        DatabaseConstants.articlesContent: '''
-Breaking bad habits is often harder than forming good ones because they're usually tied to immediate rewards. Here's a science-based approach to overcome them:
-
-1. Identify Your Triggers
-- Environmental cues (places, people, situations)
-- Emotional states (stress, boredom, anxiety)
-- Time of day patterns
-
-2. Replace, Don't Just Remove
-- Substitute the bad habit with a healthier alternative
-- Keep the same cue and reward, change the routine
-- Example: Instead of reaching for your phone when bored, do 10 push-ups
-
-3. Change Your Environment
-- Remove cues that trigger the bad habit
-- Make the bad habit harder to do
-- Make good alternatives more accessible
-
-4. Use the 2-Minute Rule
-- When you feel the urge, commit to doing something else for just 2 minutes
-- Often, the urge will pass in this time
-
-5. Track Your Relapses
-- Don't judge yourself harshly for setbacks
-- Learn from each relapse to identify patterns
-- Focus on getting back on track quickly
-
-Remember: Progress, not perfection, is the goal.
-        ''',
-        DatabaseConstants.articlesAuthor: 'Behavioral Scientist',
-        DatabaseConstants.articlesCategory: 'Breaking Habits',
-        DatabaseConstants.articlesCreatedAt: DateTime.now().toIso8601String(),
-        DatabaseConstants.articlesIsFavorite: 0,
-      },
-      {
-        DatabaseConstants.articlesTitle: 'The Psychology of Motivation',
-        DatabaseConstants.articlesContent: '''
-Understanding what truly motivates us is key to lasting behavior change. Research shows that intrinsic motivation (internal drive) is more powerful than extrinsic motivation (external rewards).
-
-Types of Motivation:
-
-Intrinsic Motivation:
-- Autonomy: Feeling in control of your choices
-- Mastery: Getting better at something that matters
-- Purpose: Connecting to something larger than yourself
-
-Extrinsic Motivation:
-- Rewards: Money, praise, recognition
-- Punishment: Fear of consequences
-- Social pressure: Others' expectations
-
-How to Boost Intrinsic Motivation:
-1. Connect habits to your values and identity
-2. Focus on the process, not just outcomes
-3. Celebrate progress and learning
-4. Give yourself choices and flexibility
-5. Find meaning in your daily actions
-
-Remember: The most sustainable changes come from internal desire, not external pressure.
-        ''',
-        DatabaseConstants.articlesAuthor: 'Psychology Researcher',
-        DatabaseConstants.articlesCategory: 'Motivation',
-        DatabaseConstants.articlesCreatedAt: DateTime.now().toIso8601String(),
-        DatabaseConstants.articlesIsFavorite: 0,
-      },
-    ];
-
-    for (final article in articles) {
-      await db.insert(DatabaseConstants.articlesTable, article);
-    }
-
-    AppLogger.debug('Seeded ${articles.length} articles');
   }
 
   /// Close the database connection

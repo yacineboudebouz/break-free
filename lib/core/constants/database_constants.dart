@@ -17,53 +17,92 @@ class DatabaseConstants {
   static const String habitsCategory = 'category';
   static const String habitsCreatedAt = 'created_at';
   static const String habitsUpdatedAt = 'updated_at';
-  static const String habitsStreakCount = 'streak_count';
-  static const String habitsLastSuccessDate = 'last_success_date';
+  static const String habitsLastRelapseDate = 'last_relapse_date';
+  static const String habitsStartDate = 'start_date';
+  static const String habitsCurrentStreak = 'current_streak';
+  static const String habitsBestStreak = 'best_streak';
+  static const String habitsTotalRelapses = 'total_relapses';
+  static const String habitsTotalSuccessDays = 'total_success_days';
   static const String habitsIsActive = 'is_active';
+  static const String habitsTargetDays = 'target_days';
+  static const String habitsNotes = 'notes';
 
   // Relapses Table Columns
   static const String relapsesId = 'id';
   static const String relapsesHabitId = 'habit_id';
+  static const String relapsesType = 'type';
   static const String relapsesDate = 'date';
   static const String relapsesNote = 'note';
+  static const String relapsesTrigger = 'trigger';
+  static const String relapsesEmotion = 'emotion';
+  static const String relapsesLocation = 'location';
+  static const String relapsesIntensityLevel = 'intensity_level';
+  static const String relapsesDurationMinutes = 'duration_minutes';
+  static const String relapsesFeltGuilty = 'felt_guilty';
+  static const String relapsesLessonsLearned = 'lessons_learned';
+  static const String relapsesRecoveryPlan = 'recovery_plan';
   static const String relapsesCreatedAt = 'created_at';
-  static const String relapsesType = 'type'; // 'relapse' or 'success'
+  static const String relapsesUpdatedAt = 'updated_at';
 
   // Articles Table Columns
   static const String articlesId = 'id';
   static const String articlesTitle = 'title';
+  static const String articlesSummary = 'summary';
   static const String articlesContent = 'content';
   static const String articlesAuthor = 'author';
   static const String articlesCategory = 'category';
-  static const String articlesCreatedAt = 'created_at';
-  static const String articlesIsFavorite = 'is_favorite';
+  static const String articlesMood = 'mood';
+  static const String articlesDifficulty = 'difficulty';
+  static const String articlesTags = 'tags';
+  static const String articlesReadTimeMinutes = 'read_time_minutes';
+  static const String articlesPublishedDate = 'published_date';
+  static const String articlesIsFeatured = 'is_featured';
+  static const String articlesThumbnailUrl = 'thumbnail_url';
+  static const String articlesKeyQuote = 'key_quote';
+  static const String articlesTargetAudience = 'target_audience';
+  static const String articlesSource = 'source';
 
   // SQL Create Table Statements
   static const String createHabitsTable =
       '''
     CREATE TABLE $habitsTable (
-      $habitsId INTEGER PRIMARY KEY AUTOINCREMENT,
+      $habitsId TEXT PRIMARY KEY,
       $habitsName TEXT NOT NULL,
-      $habitsDescription TEXT,
+      $habitsDescription TEXT NOT NULL,
       $habitsType TEXT NOT NULL,
-      $habitsCategory TEXT,
-      $habitsCreatedAt TEXT NOT NULL,
-      $habitsUpdatedAt TEXT NOT NULL,
-      $habitsStreakCount INTEGER DEFAULT 0,
-      $habitsLastSuccessDate TEXT,
-      $habitsIsActive INTEGER DEFAULT 1
+      $habitsCategory TEXT NOT NULL,
+      $habitsCreatedAt INTEGER NOT NULL,
+      $habitsUpdatedAt INTEGER NOT NULL,
+      $habitsLastRelapseDate INTEGER,
+      $habitsStartDate INTEGER NOT NULL,
+      $habitsCurrentStreak INTEGER DEFAULT 0,
+      $habitsBestStreak INTEGER DEFAULT 0,
+      $habitsTotalRelapses INTEGER DEFAULT 0,
+      $habitsTotalSuccessDays INTEGER DEFAULT 0,
+      $habitsIsActive INTEGER DEFAULT 1,
+      $habitsTargetDays INTEGER,
+      $habitsNotes TEXT
     )
   ''';
 
   static const String createRelapsesTable =
       '''
     CREATE TABLE $relapsesTable (
-      $relapsesId INTEGER PRIMARY KEY AUTOINCREMENT,
-      $relapsesHabitId INTEGER NOT NULL,
-      $relapsesDate TEXT NOT NULL,
-      $relapsesNote TEXT,
+      $relapsesId TEXT PRIMARY KEY,
+      $relapsesHabitId TEXT NOT NULL,
       $relapsesType TEXT NOT NULL,
-      $relapsesCreatedAt TEXT NOT NULL,
+      $relapsesDate INTEGER NOT NULL,
+      $relapsesNote TEXT,
+      $relapsesTrigger TEXT,
+      $relapsesEmotion TEXT,
+      $relapsesLocation TEXT,
+      $relapsesIntensityLevel INTEGER,
+      $relapsesDurationMinutes INTEGER,
+      $relapsesFeltGuilty INTEGER DEFAULT 0,
+      $relapsesLessonsLearned TEXT,
+      $relapsesRecoveryPlan TEXT,
+      $relapsesCreatedAt INTEGER NOT NULL,
+      $relapsesUpdatedAt INTEGER NOT NULL,
       FOREIGN KEY ($relapsesHabitId) REFERENCES $habitsTable($habitsId) ON DELETE CASCADE
     )
   ''';
@@ -71,13 +110,22 @@ class DatabaseConstants {
   static const String createArticlesTable =
       '''
     CREATE TABLE $articlesTable (
-      $articlesId INTEGER PRIMARY KEY AUTOINCREMENT,
+      $articlesId TEXT PRIMARY KEY,
       $articlesTitle TEXT NOT NULL,
+      $articlesSummary TEXT NOT NULL,
       $articlesContent TEXT NOT NULL,
-      $articlesAuthor TEXT,
-      $articlesCategory TEXT,
-      $articlesCreatedAt TEXT NOT NULL,
-      $articlesIsFavorite INTEGER DEFAULT 0
+      $articlesAuthor TEXT NOT NULL,
+      $articlesCategory TEXT NOT NULL,
+      $articlesMood TEXT NOT NULL,
+      $articlesDifficulty TEXT NOT NULL,
+      $articlesTags TEXT NOT NULL,
+      $articlesReadTimeMinutes INTEGER NOT NULL,
+      $articlesPublishedDate INTEGER NOT NULL,
+      $articlesIsFeatured INTEGER DEFAULT 0,
+      $articlesThumbnailUrl TEXT,
+      $articlesKeyQuote TEXT,
+      $articlesTargetAudience TEXT,
+      $articlesSource TEXT
     )
   ''';
 }
