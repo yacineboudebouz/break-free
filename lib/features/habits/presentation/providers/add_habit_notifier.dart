@@ -112,7 +112,7 @@ class AddHabitNotifier extends _$AddHabitNotifier {
   void updateName(String name) {
     final trimmedName = name.trim();
     final fieldErrors = Map<String, String>.from(state.fieldErrors);
-    
+
     // Validate name
     if (trimmedName.isEmpty) {
       fieldErrors['name'] = 'Habit name is required';
@@ -132,7 +132,7 @@ class AddHabitNotifier extends _$AddHabitNotifier {
   /// Updates the habit description and validates it
   void updateDescription(String description) {
     final fieldErrors = Map<String, String>.from(state.fieldErrors);
-    
+
     // Validate description
     if (description.trim().length > 500) {
       fieldErrors['description'] = 'Description cannot exceed 500 characters';
@@ -160,7 +160,7 @@ class AddHabitNotifier extends _$AddHabitNotifier {
   /// Updates the start date and validates it
   void updateStartDate(DateTime startDate) {
     final fieldErrors = Map<String, String>.from(state.fieldErrors);
-    
+
     // Validate start date
     if (startDate.isAfter(DateTime.now().add(const Duration(days: 1)))) {
       fieldErrors['startDate'] = 'Start date cannot be in the future';
@@ -178,12 +178,14 @@ class AddHabitNotifier extends _$AddHabitNotifier {
   /// Updates the target days and validates it
   void updateTargetDays(int? targetDays) {
     final fieldErrors = Map<String, String>.from(state.fieldErrors);
-    
+
     // Validate target days
     if (targetDays != null && targetDays <= 0) {
       fieldErrors['targetDays'] = 'Target days must be greater than 0';
-    } else if (targetDays != null && targetDays > 3650) { // 10 years max
-      fieldErrors['targetDays'] = 'Target days cannot exceed 10 years (3650 days)';
+    } else if (targetDays != null && targetDays > 3650) {
+      // 10 years max
+      fieldErrors['targetDays'] =
+          'Target days cannot exceed 10 years (3650 days)';
     } else {
       fieldErrors.remove('targetDays');
     }
@@ -203,7 +205,7 @@ class AddHabitNotifier extends _$AddHabitNotifier {
   /// Validates all fields and returns validation errors
   Map<String, String> _validateAllFields() {
     final errors = <String, String>{};
-    
+
     // Validate name
     final trimmedName = state.name.trim();
     if (trimmedName.isEmpty) {
@@ -218,7 +220,7 @@ class AddHabitNotifier extends _$AddHabitNotifier {
     }
 
     // Validate start date
-    if (state.startDate != null && 
+    if (state.startDate != null &&
         state.startDate!.isAfter(DateTime.now().add(const Duration(days: 1)))) {
       errors['startDate'] = 'Start date cannot be in the future';
     }
@@ -280,10 +282,7 @@ class AddHabitNotifier extends _$AddHabitNotifier {
       return result.fold(
         (failure) {
           AppLogger.error('Failed to create habit: ${failure.message}');
-          state = state.copyWith(
-            isLoading: false,
-            error: failure.message,
-          );
+          state = state.copyWith(isLoading: false, error: failure.message);
           return false;
         },
         (createdHabit) {
@@ -304,9 +303,7 @@ class AddHabitNotifier extends _$AddHabitNotifier {
 
   /// Resets the form to initial state
   void resetForm() {
-    state = AddHabitState(
-      startDate: DateTime.now(),
-    );
+    state = AddHabitState(startDate: DateTime.now());
   }
 
   /// Clears any error state

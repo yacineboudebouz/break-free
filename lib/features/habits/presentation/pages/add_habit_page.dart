@@ -20,7 +20,7 @@ class AddHabitPage extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: state.isLoading ? null : () => _saveHabit(context, ref),
-            child: state.isLoading 
+            child: state.isLoading
                 ? const SizedBox(
                     width: 16,
                     height: 16,
@@ -99,10 +99,7 @@ class AddHabitPage extends ConsumerWidget {
             const SizedBox(height: 24),
 
             // Habit type selection
-            Text(
-              'Habit Type',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            Text('Habit Type', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             Row(
               children: [
@@ -112,8 +109,8 @@ class AddHabitPage extends ConsumerWidget {
                     subtitle: const Text('Habit to quit'),
                     value: HabitType.bad,
                     groupValue: state.type,
-                    onChanged: state.isLoading 
-                        ? null 
+                    onChanged: state.isLoading
+                        ? null
                         : (value) => notifier.updateType(value!),
                   ),
                 ),
@@ -123,8 +120,8 @@ class AddHabitPage extends ConsumerWidget {
                     subtitle: const Text('Habit to build'),
                     value: HabitType.good,
                     groupValue: state.type,
-                    onChanged: state.isLoading 
-                        ? null 
+                    onChanged: state.isLoading
+                        ? null
                         : (value) => notifier.updateType(value!),
                   ),
                 ),
@@ -133,10 +130,7 @@ class AddHabitPage extends ConsumerWidget {
             const SizedBox(height: 24),
 
             // Category selection
-            Text(
-              'Category',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            Text('Category', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             DropdownButtonFormField<HabitCategory>(
               value: state.category,
@@ -150,21 +144,18 @@ class AddHabitPage extends ConsumerWidget {
                   child: Text(_getCategoryDisplayName(category)),
                 );
               }).toList(),
-              onChanged: state.isLoading 
-                  ? null 
+              onChanged: state.isLoading
+                  ? null
                   : (value) => notifier.updateCategory(value!),
             ),
             const SizedBox(height: 24),
 
             // Start date selection
-            Text(
-              'Start Date',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            Text('Start Date', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             InkWell(
-              onTap: state.isLoading 
-                  ? null 
+              onTap: state.isLoading
+                  ? null
                   : () => _selectStartDate(context, ref),
               child: InputDecorator(
                 decoration: InputDecoration(
@@ -220,7 +211,7 @@ class AddHabitPage extends ConsumerWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: (state.isFormValid && !state.isLoading) 
+                onPressed: (state.isFormValid && !state.isLoading)
                     ? () => _saveHabit(context, ref)
                     : null,
                 child: state.isLoading
@@ -240,7 +231,7 @@ class AddHabitPage extends ConsumerWidget {
 
   Future<void> _saveHabit(BuildContext context, WidgetRef ref) async {
     final notifier = ref.read(addHabitNotifierProvider.notifier);
-    
+
     final success = await notifier.createHabit();
     if (success && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -255,15 +246,16 @@ class AddHabitPage extends ConsumerWidget {
 
   Future<void> _selectStartDate(BuildContext context, WidgetRef ref) async {
     final notifier = ref.read(addHabitNotifierProvider.notifier);
-    final currentDate = ref.read(addHabitNotifierProvider).startDate ?? DateTime.now();
-    
+    final currentDate =
+        ref.read(addHabitNotifierProvider).startDate ?? DateTime.now();
+
     final selectedDate = await showDatePicker(
       context: context,
       initialDate: currentDate,
       firstDate: DateTime.now().subtract(const Duration(days: 365)),
       lastDate: DateTime.now().add(const Duration(days: 1)),
     );
-    
+
     if (selectedDate != null) {
       notifier.updateStartDate(selectedDate);
     }
