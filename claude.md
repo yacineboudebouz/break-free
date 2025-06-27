@@ -62,8 +62,8 @@ lib/
 │   ├── constants/
 │   │   ├── app_constants.dart
 │   │   └── database_constants.dart
-│   ├── di/
-│   │   └── dependency_injection.dart
+│   ├── providers/
+│   │   └── providers.dart
 │   ├── error/
 │   │   ├── exceptions.dart
 │   │   └── failures.dart

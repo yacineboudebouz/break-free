@@ -33,8 +33,9 @@ This plan breaks down the implementation of the Bad Habit Killer Flutter app int
 - [ ] 1.2.2 Set up core constants
   - Create `app_constants.dart` (app name, version, etc.)
   - Create `database_constants.dart` (table names, columns)
-- [ ] 1.2.3 Set up dependency injection container
-  - Create `dependency_injection.dart` with provider setup
+- [ ] 1.2.3 Set up core providers setup
+  - Create `providers.dart` with core Riverpod providers
+  - Set up provider overrides for testing
 - [ ] 1.2.4 Create base error handling classes
   - Create `failures.dart` with abstract Failure class
   - Create `exceptions.dart` with custom exceptions
