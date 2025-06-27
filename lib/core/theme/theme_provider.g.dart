@@ -139,7 +139,7 @@ final themeActionsProvider = AutoDisposeProvider<ThemeActions>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ThemeActionsRef = AutoDisposeProviderRef<ThemeActions>;
-String _$themeNotifierHash() => r'0d65c33b94a7a56eece9396f77efd089629ea95b';
+String _$themeNotifierHash() => r'2bb7214152aee348d9c075a3f162ccc419de4020';
 
 /// Theme notifier that manages app theme state and persistence
 ///

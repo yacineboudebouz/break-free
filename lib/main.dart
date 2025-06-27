@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/database/database_service.dart';
 import 'core/theme/theme.dart';
+import 'core/routing/routing.dart';
 import 'core/utils/logger.dart';
 
 void main() async {
@@ -36,13 +37,14 @@ class _BadHabitKillerAppState extends ConsumerState<BadHabitKillerApp> {
     final lightTheme = ref.watch(lightThemeDataProvider);
     final darkTheme = ref.watch(darkThemeDataProvider);
     final themeMode = ref.watch(materialThemeModeProvider);
+    final router = ref.watch(appRouterProvider);
 
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Bad Habit Killer',
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: themeMode,
-      home: const HomePage(),
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
     );
   }
@@ -50,11 +52,13 @@ class _BadHabitKillerAppState extends ConsumerState<BadHabitKillerApp> {
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentThemeMode = ref.watch(currentThemeModeProvider);
     final isDarkMode = ref.watch(isDarkModeProvider);
     final themeActions = ref.watch(themeActionsProvider);
+    final navigationService = ref.watch(navigationServiceProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -121,6 +125,42 @@ class HomePage extends ConsumerWidget {
           ),
         ],
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [Colors.blue, Colors.purple]),
+              ),
+              child: Text(
+                'Bad Habit Killer',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Home'),
+              onTap: () => navigationService.goHome(),
+            ),
+            ListTile(
+              leading: const Icon(Icons.article),
+              title: const Text('Articles'),
+              onTap: () => navigationService.goToArticles(),
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () => navigationService.goToSettings(),
+            ),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text('Credits'),
+              onTap: () => navigationService.goToCredits(),
+            ),
+          ],
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -141,6 +181,37 @@ class HomePage extends ConsumerWidget {
               'Mode: ${isDarkMode ? 'Dark' : 'Light'}',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
+            const SizedBox(height: 30),
+
+            // Navigation test buttons
+            const Text(
+              'Navigation Tests:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                ElevatedButton(
+                  onPressed: () => navigationService.goToHabitDetail('1'),
+                  child: const Text('Habit Detail'),
+                ),
+                ElevatedButton(
+                  onPressed: () => navigationService.goToAddHabit(),
+                  child: const Text('Add Habit'),
+                ),
+                ElevatedButton(
+                  onPressed: () => navigationService.goToEditHabit('1'),
+                  child: const Text('Edit Habit'),
+                ),
+                ElevatedButton(
+                  onPressed: () => navigationService.goToArticleDetail('1'),
+                  child: const Text('Article Detail'),
+                ),
+              ],
+            ),
+
             const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
