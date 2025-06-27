@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
@@ -10,6 +11,8 @@ import '../../domain/entities/relapse.dart';
 import '../../domain/repositories/habit_repository.dart';
 import '../datasources/datasources.dart';
 import '../models/models.dart';
+
+part 'habit_repository_impl.g.dart';
 
 /// Implementation of HabitRepository using local data source
 class HabitRepositoryImpl implements HabitRepository {
@@ -1238,4 +1241,16 @@ class HabitRepositoryImpl implements HabitRepository {
 
     return bestStreak;
   }
+}
+
+// Repository Provider
+@riverpod
+HabitRepository habitRepository(HabitRepositoryRef ref) {
+  final habitDataSource = ref.watch(habitLocalDataSourceProvider);
+  final relapseDataSource = ref.watch(relapseLocalDataSourceProvider);
+  
+  return HabitRepositoryImpl(
+    habitLocalDataSource: habitDataSource,
+    relapseLocalDataSource: relapseDataSource,
+  );
 }

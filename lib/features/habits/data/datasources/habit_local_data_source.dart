@@ -1,10 +1,13 @@
 import 'package:sqflite/sqflite.dart' hide DatabaseException;
 import 'package:uuid/uuid.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/database/database_service.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/utils/logger.dart';
 import '../models/habit_model.dart';
+
+part 'habit_local_data_source.g.dart';
 
 /// Abstract interface for habit local data source
 abstract class HabitLocalDataSource {
@@ -397,12 +400,17 @@ class HabitLocalDataSourceImpl implements HabitLocalDataSource {
             whereArgs: [habit.id],
           );
         }
-      });
-
-      AppLogger.info('Successfully bulk updated ${habits.length} habits');
+      });      AppLogger.info('Successfully bulk updated ${habits.length} habits');
     } catch (e, stackTrace) {
       AppLogger.error('Failed to bulk update habits', e, stackTrace);
       throw DatabaseException(message: 'Failed to bulk update habits: $e');
     }
   }
+}
+
+// Data Source Provider
+@riverpod
+HabitLocalDataSource habitLocalDataSource(HabitLocalDataSourceRef ref) {
+  final databaseService = ref.watch(databaseServiceProvider);
+  return HabitLocalDataSourceImpl(databaseService);
 }

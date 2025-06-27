@@ -1,10 +1,13 @@
 import 'package:sqflite/sqflite.dart' hide DatabaseException;
 import 'package:uuid/uuid.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/database/database_service.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/utils/logger.dart';
 import '../models/relapse_model.dart';
+
+part 'relapse_local_data_source.g.dart';
 
 /// Abstract interface for relapse local data source
 abstract class RelapseLocalDataSource {
@@ -434,8 +437,14 @@ class RelapseLocalDataSourceImpl implements RelapseLocalDataSource {
         'Failed to get relapse stats for habit: $habitId',
         e,
         stackTrace,
-      );
-      throw DatabaseException(message: 'Failed to get relapse statistics: $e');
+      );      throw DatabaseException(message: 'Failed to get relapse statistics: $e');
     }
   }
+}
+
+// Data Source Provider
+@riverpod
+RelapseLocalDataSource relapseLocalDataSource(RelapseLocalDataSourceRef ref) {
+  final databaseService = ref.watch(databaseServiceProvider);
+  return RelapseLocalDataSourceImpl(databaseService);
 }

@@ -1,11 +1,15 @@
+import 'package:bad_habit_killer/features/habits/data/repositories/habit_repository_impl.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/utils/logger.dart';
 import '../entities/habit.dart';
 import '../repositories/habit_repository.dart';
+
 import 'base_usecase.dart';
+
+part 'get_habits.g.dart';
 
 /// Use case for retrieving habits with optional filtering
 ///
@@ -70,7 +74,13 @@ class GetHabitsParams extends Equatable {
   final HabitCategory? category;
 
   const GetHabitsParams({this.type, this.category});
-
   @override
   List<Object?> get props => [type, category];
+}
+
+/// Provider for GetHabits use case
+@riverpod
+GetHabits getHabitsUseCase(GetHabitsUseCaseRef ref) {
+  final repository = ref.watch(habitRepositoryProvider);
+  return GetHabits(repository);
 }
