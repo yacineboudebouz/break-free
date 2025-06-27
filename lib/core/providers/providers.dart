@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:sqflite/sqflite.dart';
 import '../database/database_helper.dart';
+import '../database/database_service.dart';
 
 part 'providers.g.dart';
 
@@ -36,6 +37,13 @@ DatabaseHelper databaseHelper(Ref ref) {
 Future<Database> database(Ref ref) async {
   final databaseHelper = ref.read(databaseHelperProvider);
   return await databaseHelper.database;
+}
+
+/// Database service provider - handles database operations
+@riverpod
+DatabaseService databaseService(DatabaseServiceRef ref) {
+  final databaseHelper = ref.watch(databaseHelperProvider);
+  return DatabaseServiceImpl(databaseHelper);
 }
 
 // Theme provider will be added in Phase 4
