@@ -48,7 +48,7 @@ This plan breaks down the implementation of the Bad Habit Killer Flutter app int
 - [ ] 1.3.1 Design database schema
   - Create habits table schema
   - Create relapses table schema  
-  - Create articles table schema
+  - Create articles table schema (for pre-defined inspirational content)
 - [ ] 1.3.2 Create database helper class
   - Implement SQLite database creation
   - Handle database versioning and migrations
@@ -85,13 +85,18 @@ This plan breaks down the implementation of the Bad Habit Killer Flutter app int
 ### Task 2.2: Articles Domain Layer
 **Subtasks:**
 - [ ] 2.2.1 Create Article entity
-  - Define Article class (id, title, content, author, category, etc.)
+  - Define Article class (id, title, content, author, category, tags, etc.)
+  - Include reading metadata (readTime, difficulty level)
+  - Add motivational content fields (mood, target audience)
 - [ ] 2.2.2 Create Article repository interface
-  - Define methods for article management
+  - Define methods for article retrieval (read-only operations)
+  - Include filtering by category, tags, and mood
 - [ ] 2.2.3 Create Article use cases
-  - `GetArticles` use case
-  - `GetArticleById` use case
-  - `SearchArticles` use case
+  - `GetArticles` use case with filtering options
+  - `GetArticleById` use case for detailed view
+  - `SearchArticles` use case for text search
+  - `GetArticlesByCategory` use case
+  - `GetArticlesByTags` use case
 
 ---
 
@@ -107,7 +112,8 @@ This plan breaks down the implementation of the Bad Habit Killer Flutter app int
   - Add database mapping methods
   - Handle date serialization
 - [ ] 3.1.3 Create ArticleModel extending Article entity
-  - Add database mapping functionality
+  - Add database mapping functionality (read-only)
+  - Include JSON parsing for pre-seeded content
 
 ### Task 3.2: Local Data Sources
 **Subtasks:**
@@ -121,9 +127,10 @@ This plan breaks down the implementation of the Bad Habit Killer Flutter app int
   - Implement history retrieval
   - Add relationship queries with habits
 - [ ] 3.2.3 Implement ArticleLocalDataSource
-  - Create article retrieval operations
-  - Implement search functionality
-  - Seed initial articles data
+  - Create article retrieval operations (read-only)
+  - Implement search and filtering functionality
+  - Seed database with pre-defined inspirational articles
+  - Include category and tag-based filtering
 
 ### Task 3.3: Repository Implementations
 **Subtasks:**
@@ -133,8 +140,9 @@ This plan breaks down the implementation of the Bad Habit Killer Flutter app int
   - Include comprehensive logging
   - Handle edge cases and validation
 - [ ] 3.3.2 Implement ArticleRepositoryImpl
-  - Implement article repository methods
-  - Add error handling
+  - Implement article repository methods (read-only)
+  - Add proper error handling
+  - Include caching for better performance
 
 ---
 
@@ -227,8 +235,10 @@ This plan breaks down the implementation of the Bad Habit Killer Flutter app int
 ### Task 6.2: Other Feature Providers
 **Subtasks:**
 - [ ] 6.2.1 Create ArticlesNotifier
-  - Manage articles state
-  - Implement search functionality
+  - Manage articles loading and caching state
+  - Implement search and filtering functionality
+  - Handle category and tag-based filtering
+  - Manage article favorites/bookmarks (optional)
 - [ ] 6.2.2 Create SearchNotifier
   - Handle search state across features
   - Implement search history
@@ -343,17 +353,20 @@ This plan breaks down the implementation of the Bad Habit Killer Flutter app int
 ### Task 9.1: Articles Screen
 **Subtasks:**
 - [ ] 9.1.1 Create ArticlesPage
-  - List view of available articles
-  - Search functionality
-  - Category filtering
+  - Grid/List view of pre-defined inspirational articles
+  - Search functionality for finding relevant content
+  - Category filtering (motivation, tips, success stories, etc.)
+  - Tag-based filtering for specific topics
 - [ ] 9.1.2 Create ArticleDetailPage
-  - Full article display
-  - Reading progress
-  - Share functionality
+  - Full article display with proper formatting
+  - Reading time estimation
+  - Beautiful typography and layout
+  - Optional bookmarking/favorites functionality
 - [ ] 9.1.3 Create ArticleCard widget
-  - Article preview cards
-  - Category indicators
-  - Read status
+  - Attractive article preview cards
+  - Category and mood indicators
+  - Reading time and difficulty level
+  - Motivational thumbnails or icons
 
 ### Task 9.2: Settings Screen
 **Subtasks:**
