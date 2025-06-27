@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'core/database/database_service.dart';
+import 'core/theme/theme.dart';
 import 'core/utils/logger.dart';
 
 void main() async {
@@ -12,31 +14,112 @@ void main() async {
   runApp(const ProviderScope(child: BadHabitKillerApp()));
 }
 
-class BadHabitKillerApp extends ConsumerWidget {
+class BadHabitKillerApp extends ConsumerStatefulWidget {
   const BadHabitKillerApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BadHabitKillerApp> createState() => _BadHabitKillerAppState();
+}
+
+class _BadHabitKillerAppState extends ConsumerState<BadHabitKillerApp> {
+  @override
+  void initState() {
+    super.initState();
+    // Initialize theme provider
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(themeNotifierProvider.notifier).initialize();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final lightTheme = ref.watch(lightThemeDataProvider);
+    final darkTheme = ref.watch(darkThemeDataProvider);
+    final themeMode = ref.watch(materialThemeModeProvider);
+
     return MaterialApp(
       title: 'Bad Habit Killer',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: themeMode,
       home: const HomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentThemeMode = ref.watch(currentThemeModeProvider);
+    final isDarkMode = ref.watch(isDarkModeProvider);
+    final themeActions = ref.watch(themeActionsProvider);
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Bad Habit Killer'),
+        actions: [
+          // Theme switch button
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.palette),
+            onSelected: (value) {
+              switch (value) {
+                case 'angel':
+                  themeActions.switchToAngelTheme();
+                  break;
+                case 'devil':
+                  themeActions.switchToDevilTheme();
+                  break;
+                case 'dark':
+                  themeActions.toggleDarkMode();
+                  break;
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'angel',
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.light_mode,
+                      color: currentThemeMode == AppThemeMode.angel
+                          ? Theme.of(context).primaryColor
+                          : null,
+                    ),
+                    const SizedBox(width: 8),
+                    const Text('Angel Theme'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'devil',
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.dark_mode,
+                      color: currentThemeMode == AppThemeMode.devil
+                          ? Theme.of(context).primaryColor
+                          : null,
+                    ),
+                    const SizedBox(width: 8),
+                    const Text('Devil Theme'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'dark',
+                child: Row(
+                  children: [
+                    Icon(isDarkMode ? Icons.brightness_7 : Icons.brightness_4),
+                    const SizedBox(width: 8),
+                    Text(isDarkMode ? 'Light Mode' : 'Dark Mode'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -46,6 +129,52 @@ class HomePage extends ConsumerWidget {
               'Welcome to Bad Habit Killer!',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 20),
+            Text(
+              'Current Theme: ${currentThemeMode.name.toUpperCase()}',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Text(
+              'Mode: ${isDarkMode ? 'Dark' : 'Light'}',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () => themeActions.switchToAngelTheme(),
+                  icon: const Icon(Icons.lightbulb),
+                  label: const Text('Angel Theme'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: currentThemeMode == AppThemeMode.angel
+                        ? Theme.of(context).primaryColor
+                        : null,
+                  ),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () => themeActions.switchToDevilTheme(),
+                  icon: const Icon(Icons.warning),
+                  label: const Text('Devil Theme'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: currentThemeMode == AppThemeMode.devil
+                        ? Theme.of(context).primaryColor
+                        : null,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            OutlinedButton.icon(
+              onPressed: () => themeActions.toggleDarkMode(),
+              icon: Icon(isDarkMode ? Icons.brightness_7 : Icons.brightness_4),
+              label: Text(isDarkMode ? 'Switch to Light' : 'Switch to Dark'),
+            ),
+            const SizedBox(height: 30),
+            const Divider(),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => _testDatabase(ref),
