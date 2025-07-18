@@ -55,6 +55,13 @@ enum AppThemeMode {
       AppThemeMode.dark => Icons.nights_stay,
     };
   }
+
+  BorderSide get dividerBorder {
+    return switch (this) {
+      AppThemeMode.light => const BorderSide(color: Colors.grey),
+      AppThemeMode.dark => const BorderSide(color: Colors.white30),
+    };
+  }
 }
 
 class AppTheme {
@@ -69,14 +76,31 @@ class AppTheme {
   late final Color _scaffoldBackgroundColor = _appColors.scaffoldBGColor;
 
   late final CustomColors _customColors = _appColors.customColors;
+  late final IconThemeData _iconTheme = IconThemeData(
+    color: _appColors.iconColor,
+    size: 24.0, // You can adjust the size as needed
+  );
+
+  late final FloatingActionButtonThemeData _actionButtonThemeData =
+      FloatingActionButtonThemeData(
+        backgroundColor: _appColors.tertiaryColor,
+        foregroundColor: _appColors.scaffoldBGColor,
+        elevation: 2.0,
+      );
+
   //TODO: in future if i want to add responsive texts and so on
   // i just have to add flutter screenutil package and create other custom classes
   // to handle screen sizes and responsive texts and just add them here with base theme
   ThemeData getThemeData() {
     return _baseTheme.copyWith(
       primaryColor: primaryColor,
+
       scaffoldBackgroundColor: _scaffoldBackgroundColor,
       colorScheme: _colorScheme,
+      dividerColor: _themeMode.dividerBorder.color,
+      iconTheme: _iconTheme,
+      focusColor: _appColors.appBarColor,
+      floatingActionButtonTheme: _actionButtonThemeData,
       extensions: [_customColors],
     );
   }

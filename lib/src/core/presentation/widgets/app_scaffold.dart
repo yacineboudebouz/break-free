@@ -10,6 +10,9 @@ class AppScaffold extends StatelessWidget {
     this.paddingV,
     this.body,
     this.appBar,
+    this.floatingActionButton,
+    this.drawer,
+    this.scaffoldKey,
   });
 
   final Widget? bottomNavigationBar;
@@ -17,12 +20,15 @@ class AppScaffold extends StatelessWidget {
   final double? paddingV;
   final Widget? body;
   final PreferredSizeWidget? appBar;
+  final Widget? floatingActionButton;
+  final Widget? drawer;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: appBar,
-
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: paddingH ?? 0,
@@ -30,7 +36,9 @@ class AppScaffold extends StatelessWidget {
         ),
         child: body,
       ),
+      drawer: drawer,
       bottomNavigationBar: bottomNavigationBar,
+      floatingActionButton: floatingActionButton,
     );
   }
 }

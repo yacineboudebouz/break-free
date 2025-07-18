@@ -12,7 +12,7 @@ class AppColorsLight extends AppColors {
 
   // Screen Colors
   @override
-  Color get scaffoldBGColor => const Color(0xFFFAFAFA); // Gray-50
+  Color get scaffoldBGColor => const Color(0xFFFFFFFF); // Gray-50
 
   @override
   Color get appBarColor => const Color(0xFFFFFFFF); // White

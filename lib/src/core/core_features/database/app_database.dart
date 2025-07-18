@@ -16,6 +16,14 @@ Future<Database> database(Ref ref) {
   return ref.watch(appDatabaseProvider).database;
 }
 
+class DatabaseTables {
+  const DatabaseTables._();
+
+  static const String habits = "habits";
+  static const String relapses = "relapses";
+  static const String notes = "notes";
+}
+
 class AppDatabase {
   static final AppDatabase _instance = AppDatabase._internal();
   static Database? _database;
@@ -73,7 +81,7 @@ class AppDatabase {
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE habits (
+      CREATE TABLE ${DatabaseTables.habits} (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         habit_type TEXT CHECK(habit_type IN ('good', 'bad')) NOT NULL,
@@ -83,7 +91,7 @@ class AppDatabase {
       )
     ''');
     await db.execute('''
-      CREATE TABLE relapses (
+      CREATE TABLE ${DatabaseTables.relapses} (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         habit_id INTEGER NOT NULL,
         relapse_date TEXT NOT NULL,
@@ -92,7 +100,7 @@ class AppDatabase {
       )
     ''');
     await db.execute('''
-      CREATE TABLE notes (
+      CREATE TABLE ${DatabaseTables.notes} (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         habit_id INTEGER NOT NULL,
         date TEXT NOT NULL,
