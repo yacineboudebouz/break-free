@@ -14,6 +14,19 @@ enum AppThemeMode {
     return AppTheme(themeMode: this).getThemeData();
   }
 
+  /// these getters are used to check the current theme mode
+  bool get isLightTheme => this == AppThemeMode.light;
+  bool get isDarkTheme => this == AppThemeMode.dark;
+
+  /// this getter is used to get the opposite theme mode
+  /// to void using if-else statements and make code more readable
+  AppThemeMode get opposite {
+    return switch (this) {
+      AppThemeMode.light => AppThemeMode.dark,
+      AppThemeMode.dark => AppThemeMode.light,
+    };
+  }
+
   const AppThemeMode();
   ThemeData get _baseTheme {
     return switch (this) {
