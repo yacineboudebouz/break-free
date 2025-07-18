@@ -69,7 +69,9 @@ class AppTheme {
   late final Color _scaffoldBackgroundColor = _appColors.scaffoldBGColor;
 
   late final CustomColors _customColors = _appColors.customColors;
-
+  //TODO: in future if i want to add responsive texts and so on
+  // i just have to add flutter screenutil package and create other custom classes
+  // to handle screen sizes and responsive texts and just add them here with base theme
   ThemeData getThemeData() {
     return _baseTheme.copyWith(
       primaryColor: primaryColor,

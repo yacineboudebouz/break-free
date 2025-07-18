@@ -1,4 +1,5 @@
 import 'package:bad_habit_killer/src/app.dart';
+import 'package:bad_habit_killer/src/core/core_features/database/app_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'src/core/config/services/logger.dart';
@@ -27,7 +28,10 @@ class _EagerInitialization extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final values = <AsyncValue>[ref.watch(sharedPreferencesProvider)];
+    final values = <AsyncValue>[
+      ref.watch(sharedPreferencesProvider),
+      ref.watch(databaseProvider),
+    ];
 
     if (values.every((value) => value.hasValue || value.hasError)) {
       return child;

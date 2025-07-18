@@ -48,6 +48,20 @@ abstract class Sizes {
   static const double paddingH8 = 8.0;
   static const double paddingH4 = 4.0;
 
+  /// here for `radius` widgets
+  static const double radius12 = 12.0;
+  static const double radius8 = 8.0;
+  static const double radius4 = 4.0;
+
+  /// here for `border` sizes
+  static const double borderWidth1 = 1.0;
+  static const double borderWidth2 = 2.0;
+
+  /// here for `spacing` sizes
+  static const double spacing8 = 8.0;
+  static const double spacing16 = 16.0;
+  static const double spacing24 = 24.0;
+
   /// for every size in the application i have to use this class and add
   /// it here to maintain consistency
 }
