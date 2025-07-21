@@ -42,4 +42,12 @@ class AppColorsDark extends AppColors {
   CustomColors get customColors => const CustomColors(
     loadingIndicatorColor: Color(0xFF818CF8), // Indigo-400
   );
+
+  @override
+  // TODO: implement textPrimaryColor
+  Color get textPrimaryColor => Color(0xFFF1F5F9); // Slate-100
+
+  @override
+  // TODO: implement textSecondaryColor
+  Color get textSecondaryColor => Color(0xFFCBD5E1); // Slate-300
 }

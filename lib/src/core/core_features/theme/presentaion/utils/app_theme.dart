@@ -81,6 +81,18 @@ class AppTheme {
     size: 24.0, // You can adjust the size as needed
   );
 
+  late final TextTheme _textTheme = _baseTheme.textTheme.copyWith(
+    bodySmall: _baseTheme.textTheme.bodySmall?.copyWith(
+      color: _appColors.textSecondaryColor,
+    ),
+    bodyMedium: _baseTheme.textTheme.bodyMedium?.copyWith(
+      color: _appColors.textPrimaryColor,
+    ),
+    bodyLarge: _baseTheme.textTheme.bodyLarge?.copyWith(
+      color: _appColors.textPrimaryColor,
+    ),
+  );
+
   late final FloatingActionButtonThemeData _actionButtonThemeData =
       FloatingActionButtonThemeData(
         backgroundColor: _appColors.tertiaryColor,
@@ -99,6 +111,7 @@ class AppTheme {
       colorScheme: _colorScheme,
       dividerColor: _themeMode.dividerBorder.color,
       iconTheme: _iconTheme,
+      textTheme: _textTheme,
       focusColor: _appColors.appBarColor,
       floatingActionButtonTheme: _actionButtonThemeData,
       extensions: [_customColors],

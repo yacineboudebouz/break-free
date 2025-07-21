@@ -42,3 +42,8 @@ class AppScaffold extends StatelessWidget {
     );
   }
 }
+
+//TODO: iam not sure about this appscaffold,
+// maybe i will add a appbar to avoid code duplication
+// because i have to add the appbar in every screen
+// i will come back in refactoring

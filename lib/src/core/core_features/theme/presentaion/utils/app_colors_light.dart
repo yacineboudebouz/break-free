@@ -26,6 +26,12 @@ class AppColorsLight extends AppColors {
   @override
   Color get dividerColor => const Color(0xFFE5E7EB); // Gray-200
 
+  // Text Colors
+  @override
+  Color get textPrimaryColor => const Color(0xFF111827); // Gray-900
+  @override
+  Color get textSecondaryColor => const Color(0xFF6B7280); //
+
   // Icon Colors
   @override
   Color get iconColor => const Color(0xFF6B7280); // Gray-500

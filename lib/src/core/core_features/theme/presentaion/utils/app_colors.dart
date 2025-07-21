@@ -23,6 +23,10 @@ abstract class AppColors {
   Color get cardBGColor;
   Color get cardShadowColor;
 
+  /// text
+  Color get textPrimaryColor;
+  Color get textSecondaryColor;
+
   /// other colors
   CustomColors get customColors;
 }

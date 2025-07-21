@@ -1,4 +1,6 @@
+import 'package:bad_habit_killer/src/core/config/routing/app_router.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
+import 'package:bad_habit_killer/src/core/presentation/extensions/go_router_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/app_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +61,7 @@ class HomeView extends HookConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Handle add habit action
+          context.goNamed(AppRouter.addHabit.name);
         },
         child: Icon(Icons.add, size: Sizes.icon24),
       ),
