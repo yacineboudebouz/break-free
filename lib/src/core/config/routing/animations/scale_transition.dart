@@ -5,7 +5,7 @@ CustomTransitionPage<T> scaleTransition<T>({
   int? duration,
 }) => CustomTransitionPage<T>(
   child: child,
-  transitionDuration: getDuration(duration),
+  transitionDuration: TransitionConfig.getDuration(duration),
   transitionsBuilder: (context, animation, secondaryAnimation, child) =>
       ScaleTransition(
         scale: Tween<double>(begin: 0.8, end: 1).animate(animation),

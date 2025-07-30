@@ -8,7 +8,10 @@ class CreateHabit extends _$CreateHabit {
   @override
   FutureOr<void> build() {}
 
-  Future createHabit({
+  // TODO: i am not sure if i will just consider ivalidating the provider
+  // when the habit is created or if i will just return the created habit
+  // and change the state manually
+  Future<void> createHabit({
     required String name,
     required String description,
     required String type,
@@ -26,8 +29,8 @@ class CreateHabit extends _$CreateHabit {
       await ref.read(habitsRepositoryProvider).createHabit(habit);
       ref.invalidate(allHabitsProvider);
       state = const AsyncData(null);
-    } catch (e) {
-      state = AsyncError(e, StackTrace.current);
+    } catch (e, st) {
+      state = AsyncError(e, st);
     }
   }
 }

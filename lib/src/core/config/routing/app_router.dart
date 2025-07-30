@@ -20,8 +20,8 @@ GoRouter goRouter(Ref ref) {
       GoRoute(
         path: '/',
         name: AppRouter.home.name,
-        builder: (context, state) {
-          return HomeView();
+        pageBuilder: (_, _) {
+          return fadeTransition(child: HomeView());
         },
         routes: [
           GoRoute(

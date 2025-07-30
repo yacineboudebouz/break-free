@@ -6,10 +6,14 @@ part 'slide_transition.dart';
 part 'scale_transition.dart';
 
 // we use that to make our class reusable as much as possible
-Duration defaultTransitionDuration = const Duration(milliseconds: 1000);
-Duration getDuration(int? duration) {
-  if (duration == null) {
-    return defaultTransitionDuration;
+
+class TransitionConfig {
+  TransitionConfig._();
+  static const int defaultDuration = 300;
+  static const int fastduration = 200;
+  static const int slowDuration = 500;
+
+  static Duration getDuration(int? duration) {
+    return Duration(milliseconds: duration ?? defaultDuration);
   }
-  return Duration(milliseconds: duration);
 }

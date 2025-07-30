@@ -5,7 +5,7 @@ CustomTransitionPage<T> slideRightTransition<T>({
   int? duration,
 }) => CustomTransitionPage<T>(
   child: child,
-  transitionDuration: getDuration(duration),
+  transitionDuration: TransitionConfig.getDuration(duration),
   transitionsBuilder: (context, animation, secondaryAnimation, child) =>
       SlideTransition(
         position: Tween<Offset>(

@@ -6,7 +6,7 @@ CustomTransitionPage<T> fadeTransition<T>({
 }) => CustomTransitionPage<T>(
   child: child,
 
-  transitionDuration: getDuration(duration),
+  transitionDuration: TransitionConfig.getDuration(duration),
   transitionsBuilder: (context, animation, secondaryAnimation, child) =>
       FadeTransition(opacity: animation, child: child),
 );
