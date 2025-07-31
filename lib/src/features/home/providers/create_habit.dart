@@ -8,29 +8,16 @@ class CreateHabit extends _$CreateHabit {
   @override
   FutureOr<void> build() {}
 
-  // TODO: i am not sure if i will just consider ivalidating the provider
-  // when the habit is created or if i will just return the created habit
-  // and change the state manually
-  Future<void> createHabit({
-    required String name,
-    required String description,
-    required String type,
-    required String color,
-  }) async {
+  // Original notifier with manual state management
+  Future<void> createHabit(CreateHabitModel createHabit) async {
+    state = const AsyncLoading();
+    final habitsRepository = ref.watch(habitsRepositoryProvider);
     try {
-      state = const AsyncLoading();
-      final habit = CreateHabitModel(
-        name: name,
-        description: description,
-        type: type,
-        color: color,
-        startDate: DateTime.now().toIso8601String(),
-      );
-      await ref.read(habitsRepositoryProvider).createHabit(habit);
+      final createdHabitId = await habitsRepository.createHabit(createHabit);
       ref.invalidate(allHabitsProvider);
-      state = const AsyncData(null);
-    } catch (e, st) {
-      state = AsyncError(e, st);
+      state = AsyncData(null); // This might still cause issues
+    } catch (e, tr) {
+      state = AsyncError(e, tr);
     }
   }
 }

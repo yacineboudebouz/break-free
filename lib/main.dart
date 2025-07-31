@@ -1,10 +1,10 @@
 import 'package:bad_habit_killer/src/app.dart';
 import 'package:bad_habit_killer/src/core/core_features/database/app_database.dart';
 import 'package:bad_habit_killer/src/core/presentation/screens/splash_screen.dart';
-import 'package:bad_habit_killer/src/core/presentation/widgets/app_scaffold.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import 'src/core/config/services/logger.dart';
 import 'package:logging/logging.dart';
 import 'src/core/config/providers/shared_preferences_provider.dart';
@@ -12,6 +12,8 @@ import 'src/core/config/providers/provider_observer.dart';
 part 'src/core/config/services/main_initializer.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   final container = await _mainInitializer();
   runApp(UncontrolledProviderScope(container: container, child: MyApp()));
 }

@@ -20,6 +20,8 @@ extension _CacheErrorExt on CacheException {
       CacheExceptionType.getAllHabitsFailed =>
         'Failed to get all habits'.hardcoded,
       CacheExceptionType.getHabitFailed => 'Failed to get habit'.hardcoded,
+      CacheExceptionType.createHabitFailed =>
+        'Failed to create habit'.hardcoded,
       CacheExceptionType.unknown => 'Unknown error occurred'.hardcoded,
     };
   }

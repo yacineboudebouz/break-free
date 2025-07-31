@@ -4,5 +4,6 @@ enum CacheExceptionType {
   habitNotFound,
   getAllHabitsFailed,
   getHabitFailed,
+  createHabitFailed,
   unknown,
 }

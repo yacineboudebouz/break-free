@@ -1,5 +1,6 @@
 import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/utils/app_colors.dart';
 import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/utils/custom_colors.dart';
+import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
 import 'package:flutter/material.dart';
 
 /// here we define the app theme modes so we can have theming in one place
@@ -12,6 +13,10 @@ enum AppThemeMode {
     // we can add more parameters in the future if needed
   ) {
     return AppTheme(themeMode: this).getThemeData();
+  }
+
+  AppColors get appColors {
+    return AppTheme(themeMode: this)._appColors;
   }
 
   /// these getters are used to check the current theme mode
@@ -74,6 +79,7 @@ class AppTheme {
   late final ColorScheme _colorScheme = _themeMode._baseColorScheme;
   late final Color primaryColor = _appColors.primaryColor;
   late final Color _scaffoldBackgroundColor = _appColors.scaffoldBGColor;
+  AppColors get appColors => _appColors;
 
   late final CustomColors _customColors = _appColors.customColors;
   late final IconThemeData _iconTheme = IconThemeData(
@@ -83,13 +89,16 @@ class AppTheme {
 
   late final TextTheme _textTheme = _baseTheme.textTheme.copyWith(
     bodySmall: _baseTheme.textTheme.bodySmall?.copyWith(
-      color: _appColors.textSecondaryColor,
+      color: _appColors.textPrimaryColor,
+      fontSize: Sizes.font16,
     ),
     bodyMedium: _baseTheme.textTheme.bodyMedium?.copyWith(
       color: _appColors.textPrimaryColor,
+      fontSize: Sizes.font18,
     ),
     bodyLarge: _baseTheme.textTheme.bodyLarge?.copyWith(
       color: _appColors.textPrimaryColor,
+      fontSize: Sizes.font20,
     ),
   );
 
@@ -100,20 +109,41 @@ class AppTheme {
         elevation: 2.0,
       );
 
+  // here for input decoration theme
+  late final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(Sizes.radius32),
+      borderSide: BorderSide(color: _appColors.primaryColor, width: 2.0),
+    ),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(Sizes.radius32),
+      borderSide: BorderSide(color: _appColors.dividerColor, width: 1.0),
+    ),
+  );
+
+  late final TextSelectionThemeData _textSelectionThemeData =
+      TextSelectionThemeData(
+        cursorColor: _appColors.primaryColor,
+        selectionColor: _appColors.secondaryColor.withOpacity(0.5),
+        selectionHandleColor: _appColors.secondaryColor,
+      );
+
   //TODO: in future if i want to add responsive texts and so on
   // i just have to add flutter screenutil package and create other custom classes
   // to handle screen sizes and responsive texts and just add them here with base theme
   ThemeData getThemeData() {
     return _baseTheme.copyWith(
       primaryColor: primaryColor,
-
       scaffoldBackgroundColor: _scaffoldBackgroundColor,
       colorScheme: _colorScheme,
       dividerColor: _themeMode.dividerBorder.color,
+
       iconTheme: _iconTheme,
       textTheme: _textTheme,
       focusColor: _appColors.appBarColor,
       floatingActionButtonTheme: _actionButtonThemeData,
+      inputDecorationTheme: _inputDecorationTheme,
+      textSelectionTheme: _textSelectionThemeData,
       extensions: [_customColors],
     );
   }

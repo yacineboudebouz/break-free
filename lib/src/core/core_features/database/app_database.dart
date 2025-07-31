@@ -84,7 +84,6 @@ class AppDatabase {
       CREATE TABLE ${DatabaseTables.habits} (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        habit_type TEXT CHECK(habit_type IN ('good', 'bad')) NOT NULL,
         start_date TEXT NOT NULL,
         description TEXT,
         color TEXT NOT NULL

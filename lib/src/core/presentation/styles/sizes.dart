@@ -2,6 +2,7 @@
 /// It is used to maintain consistency across the application.
 abstract class Sizes {
   /// here for `font` sizes
+  static const double font32 = 32.0;
   static const double font28 = 28.0;
   static const double font24 = 24.0;
   static const double font20 = 20.0;

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_catch_clause
+
 import 'package:bad_habit_killer/src/core/config/error/app_exception.dart';
 import 'package:bad_habit_killer/src/features/home/data/datasource/habits_datasource.dart';
 import 'package:bad_habit_killer/src/features/home/domain/create_habit.dart';
@@ -26,12 +28,16 @@ class HabitsRepository {
   Future<int> createHabit(CreateHabitModel habit) async {
     try {
       return await habitsDatasource.createHabit(habit);
-    } on DatabaseException catch (e) {
-      // Handle any errors that may occur during the database operation
-      throw Exception('Failed to create habit: $e');
     } catch (e) {
-      // Handle any other unexpected errors
-      throw Exception('An unexpected error occurred: $e');
+      if (e is DatabaseException) {
+        throw AppException.cacheException(
+          type: CacheExceptionType.createHabitFailed,
+        );
+      } else if (e is AppException) {
+        rethrow;
+      } else {
+        throw AppException.cacheException(type: CacheExceptionType.unknown);
+      }
     }
   }
 
@@ -39,13 +45,15 @@ class HabitsRepository {
     try {
       return await habitsDatasource.getAllHabits();
     } on DatabaseException {
-      // Handle any errors that may occur during the database operation
       throw AppException.cacheException(
         type: CacheExceptionType.getAllHabitsFailed,
       );
     } catch (e) {
-      // Handle any other unexpected errors
-      throw AppException.cacheException(type: CacheExceptionType.unknown);
+      if (e is AppException) {
+        rethrow;
+      } else {
+        throw AppException.cacheException(type: CacheExceptionType.unknown);
+      }
     }
   }
 }

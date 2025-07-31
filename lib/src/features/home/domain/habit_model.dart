@@ -8,39 +8,32 @@ import 'package:bad_habit_killer/src/features/home/domain/relapse_model.dart';
 class HabitModel {
   final int id;
   final String name;
-  final String type;
   final String startDate;
   final String description;
   final String color;
-  final List<RelapseModel> relapses;
 
   HabitModel({
     required this.id,
     required this.name,
-    required this.type,
+
     required this.startDate,
     required this.description,
     required this.color,
-    required this.relapses,
   });
 
   HabitModel copyWith({
     int? id,
     String? name,
-    String? type,
     String? startDate,
     String? description,
     String? color,
-    List<RelapseModel>? relapses,
   }) {
     return HabitModel(
       id: id ?? this.id,
       name: name ?? this.name,
-      type: type ?? this.type,
       startDate: startDate ?? this.startDate,
       description: description ?? this.description,
       color: color ?? this.color,
-      relapses: relapses ?? this.relapses,
     );
   }
 
@@ -48,11 +41,9 @@ class HabitModel {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'type': type,
-      'startDate': startDate,
+      'start_date': startDate,
       'description': description,
       'color': color,
-      'relapses': relapses.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -60,15 +51,9 @@ class HabitModel {
     return HabitModel(
       id: map['id'] as int,
       name: map['name'] as String,
-      type: map['habit_type'] as String,
       startDate: map['start_date'] as String,
       description: map['description'] as String,
       color: map['color'] as String,
-      relapses: List<RelapseModel>.from(
-        (map['relapses'] as List<int>).map<RelapseModel>(
-          (x) => RelapseModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
     );
   }
 
@@ -79,7 +64,7 @@ class HabitModel {
 
   @override
   String toString() {
-    return 'HabitModel(id: $id, name: $name, type: $type, startDate: $startDate, description: $description, color: $color, relapses: $relapses)';
+    return 'HabitModel(id: $id, name: $name, startDate: $startDate, description: $description, color: $color,)';
   }
 
   @override
@@ -88,21 +73,17 @@ class HabitModel {
 
     return other.id == id &&
         other.name == name &&
-        other.type == type &&
         other.startDate == startDate &&
         other.description == description &&
-        other.color == color &&
-        listEquals(other.relapses, relapses);
+        other.color == color;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
         name.hashCode ^
-        type.hashCode ^
         startDate.hashCode ^
         description.hashCode ^
-        color.hashCode ^
-        relapses.hashCode;
+        color.hashCode;
   }
 }
