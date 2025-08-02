@@ -1,18 +1,19 @@
 import 'package:bad_habit_killer/src/core/presentation/extensions/app_error_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
+import 'package:bad_habit_killer/src/core/presentation/extensions/widget_ref_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/helpers/app_gaps.dart';
 import 'package:bad_habit_killer/src/core/presentation/helpers/database_colors.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
+import 'package:bad_habit_killer/src/core/presentation/utils/riverpod_framework.dart';
+import 'package:bad_habit_killer/src/core/presentation/widgets/app_button.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/app_scaffold.dart';
 import 'package:bad_habit_killer/src/features/home/domain/create_habit.dart';
 import 'package:bad_habit_killer/src/features/home/providers/create_habit.dart';
 import 'package:bad_habit_killer/src/features/home/view/widgets/color_selector.dart';
+import 'package:bad_habit_killer/src/features/home/view/widgets/text_field_with_animated_hint.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:logger/logger.dart';
 
 class AddHabitView extends StatefulHookConsumerWidget {
   const AddHabitView({super.key});
@@ -27,17 +28,14 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
     final nameController = useTextEditingController(text: "");
     final descriptionController = useTextEditingController(text: "");
     final currentColor = useState<Color>(Colors.red);
-    final createHabitState = ref.watch(createHabitProvider);
 
-    ref.listen<AsyncValue<void>>(createHabitProvider, (_, state) {
-      if (state is AsyncData) {
+    ref.listenAndHandleState(
+      createHabitProvider,
+      handleData: true,
+      whenData: (data) {
         context.pop();
-      }
-      if (state is AsyncError) {
-        final errorMessage = state.error.errorMessage();
-        Logger().e("Error creating habit: $errorMessage");
-      }
-    });
+      },
+    );
     return AppScaffold(
       body: Column(
         spacing: Sizes.spacing8,
@@ -80,28 +78,10 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
                   ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w300),
                 ),
                 gapH8,
-                TextField(
-                  controller: nameController,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(0),
-                    suffixIcon: Icon(Icons.edit_outlined),
-                    hint: AnimatedDefaultTextStyle(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      style:
-                          Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontWeight: FontWeight.w500,
-                            wordSpacing: 2,
-                            color: currentColor.value,
-                          ) ??
-                          const TextStyle(),
-                      child: Text("What you want to exclude".hardcoded),
-                    ),
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
+                TextFieldWithAnimatedHint(
+                  descriptionController: nameController,
+                  currentColor: currentColor.value,
+                  hintText: "What you want to exclude".hardcoded,
                 ),
 
                 Text(
@@ -111,28 +91,10 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
                   ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w300),
                 ),
                 gapH8,
-                TextField(
-                  controller: descriptionController,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(0),
-                    suffixIcon: Icon(Icons.edit_outlined),
-                    hint: AnimatedDefaultTextStyle(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      style:
-                          Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontWeight: FontWeight.w500,
-                            wordSpacing: 2,
-                            color: currentColor.value,
-                          ) ??
-                          const TextStyle(),
-                      child: Text("Why you want to exclude this.".hardcoded),
-                    ),
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
+                TextFieldWithAnimatedHint(
+                  descriptionController: descriptionController,
+                  currentColor: currentColor.value,
+                  hintText: "Why you want to exclude it".hardcoded,
                 ),
                 gapH16,
                 Text(
@@ -149,34 +111,18 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
                 ),
 
                 gapH16,
-                ElevatedButton(
-                  onPressed: createHabitState.isLoading
-                      ? null
-                      : () {
-                          final habit = CreateHabitModel(
-                            name: nameController.text,
-                            description: descriptionController.text,
-                            color: DatabaseColors.colorToString(
-                              currentColor.value,
-                            ),
-                            startDate: DateTime.now().toIso8601String(),
-                          );
-                          ref
-                              .read(createHabitProvider.notifier)
-                              .createHabit(habit);
-                        },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, Sizes.marginH64),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Sizes.radius32),
-                    ),
-                  ),
-                  child: Text(
-                    "Add Habit".hardcoded,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                AppButton(
+                  isLoading: ref.isLoading(createHabitProvider),
+                  text: "Add Habit".hardcoded,
+                  onPressed: () {
+                    final habit = CreateHabitModel(
+                      name: nameController.text,
+                      description: descriptionController.text,
+                      color: DatabaseColors.colorToString(currentColor.value),
+                      startDate: DateTime.now().toIso8601String(),
+                    );
+                    ref.read(createHabitProvider.notifier).createHabit(habit);
+                  },
                 ),
               ],
             ),

@@ -1,15 +1,18 @@
 import 'package:bad_habit_killer/src/core/config/routing/app_router.dart';
+import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/providers/app_theme_provider.dart';
 import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/providers/current_app_theme_provider.dart';
+import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/utils/app_theme.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/go_router_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
+import 'package:bad_habit_killer/src/core/presentation/helpers/app_gaps.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
+import 'package:bad_habit_killer/src/core/presentation/utils/riverpod_framework.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/app_scaffold.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/async_value_widget.dart';
 import 'package:bad_habit_killer/src/features/home/data/repository/habits_repository.dart';
 import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomeView extends HookConsumerWidget {
   const HomeView({super.key});
@@ -22,8 +25,28 @@ class HomeView extends HookConsumerWidget {
     return AppScaffold(
       scaffoldKey: drawerKey,
       drawer: Drawer(
-        child: SizedBox.expand(child: Column()),
         backgroundColor: appColors.scaffoldBGColor,
+        child: SizedBox.expand(
+          child: Column(
+            children: [
+              gapH32,
+              // this just for demo purposes
+              //TODO: implement a proper drawer and clean up this code
+              Switch(
+                value:
+                    ref.watch(currentAppThemeModeProvider) ==
+                    AppThemeMode.light,
+                onChanged: (value) {
+                  ref
+                      .read(appThemeNotifierProvider.notifier)
+                      .changeTheme(
+                        value ? AppThemeMode.light : AppThemeMode.dark,
+                      );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       body: Column(
         spacing: Sizes.spacing8,
@@ -61,7 +84,7 @@ class HomeView extends HookConsumerWidget {
                         prefixIcon: Icon(Icons.search, size: Sizes.icon24),
                         contentPadding: EdgeInsets.symmetric(
                           vertical: 0,
-                          horizontal: 16,
+                          horizontal: Sizes.paddingH12,
                         ), // Add this
                       ),
                     ),

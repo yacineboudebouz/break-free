@@ -1,6 +1,7 @@
 // ignore_for_file: unused_catch_clause
 
 import 'package:bad_habit_killer/src/core/config/error/app_exception.dart';
+import 'package:bad_habit_killer/src/core/presentation/extensions/repository_error_handler.dart';
 import 'package:bad_habit_killer/src/features/home/data/datasource/habits_datasource.dart';
 import 'package:bad_habit_killer/src/features/home/domain/create_habit.dart';
 import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
@@ -26,34 +27,17 @@ class HabitsRepository {
   HabitsRepository(this.habitsDatasource);
 
   Future<int> createHabit(CreateHabitModel habit) async {
-    try {
-      return await habitsDatasource.createHabit(habit);
-    } catch (e) {
-      if (e is DatabaseException) {
-        throw AppException.cacheException(
-          type: CacheExceptionType.createHabitFailed,
+    return await habitsDatasource
+        .createHabit(habit)
+        .handleRepositoryErrors(
+          // throwForTest: true,
+          specificErrorType: CacheExceptionType.createHabitFailed,
         );
-      } else if (e is AppException) {
-        rethrow;
-      } else {
-        throw AppException.cacheException(type: CacheExceptionType.unknown);
-      }
-    }
   }
 
   Future<List<HabitModel>> getAllHabits() async {
-    try {
-      return await habitsDatasource.getAllHabits();
-    } on DatabaseException {
-      throw AppException.cacheException(
-        type: CacheExceptionType.getAllHabitsFailed,
-      );
-    } catch (e) {
-      if (e is AppException) {
-        rethrow;
-      } else {
-        throw AppException.cacheException(type: CacheExceptionType.unknown);
-      }
-    }
+    return await habitsDatasource.getAllHabits().handleRepositoryErrors(
+      specificErrorType: CacheExceptionType.getAllHabitsFailed,
+    );
   }
 }

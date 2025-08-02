@@ -8,16 +8,19 @@ class CreateHabit extends _$CreateHabit {
   @override
   FutureOr<void> build() {}
 
-  // Original notifier with manual state management
+  // TODO: i am not sure if i will just consider ivalidating the provider
+  // when the habit is created or if i will just return the created habit
+  // and change the state manually
+  // read this: https://riverpod.dev/docs/essentials/side_effects
   Future<void> createHabit(CreateHabitModel createHabit) async {
-    state = const AsyncLoading();
-    final habitsRepository = ref.watch(habitsRepositoryProvider);
     try {
-      final createdHabitId = await habitsRepository.createHabit(createHabit);
+      state = const AsyncLoading();
+      await Future.delayed(const Duration(seconds: 1));
+      await ref.read(habitsRepositoryProvider).createHabit(createHabit);
       ref.invalidate(allHabitsProvider);
-      state = AsyncData(null); // This might still cause issues
-    } catch (e, tr) {
-      state = AsyncError(e, tr);
+      state = const AsyncData(null);
+    } catch (e, st) {
+      state = AsyncError(e, st);
     }
   }
 }
