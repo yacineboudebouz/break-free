@@ -14,7 +14,7 @@ enum AppRouter { home, addHabit }
 @riverpod
 GoRouter goRouter(Ref ref) {
   return GoRouter(
-    debugLogDiagnostics: kDebugMode,
+    debugLogDiagnostics: true,
     initialLocation: '/',
     routes: [
       GoRoute(

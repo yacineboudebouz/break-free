@@ -117,7 +117,9 @@ class HomeView extends HookConsumerWidget {
                   },
                 );
               },
-              onRetry: () {},
+              onRetry: () {
+                ref.invalidate(allHabitsProvider);
+              },
             ),
           ),
         ],
