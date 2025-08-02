@@ -7,15 +7,18 @@ class TextFieldWithAnimatedHint extends StatelessWidget {
     required this.descriptionController,
     required this.currentColor,
     required this.hintText,
+    this.validator,
   });
 
   final TextEditingController descriptionController;
   final Color currentColor;
   final String hintText;
+  final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: descriptionController,
+      validator: validator,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(0),
         suffixIcon: Icon(Icons.edit_outlined),

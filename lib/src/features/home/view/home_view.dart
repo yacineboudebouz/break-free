@@ -81,6 +81,14 @@ class HomeView extends HookConsumerWidget {
                             color: Theme.of(context).dividerColor,
                           ),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          // Add this
+                          borderRadius: BorderRadius.circular(Sizes.radius32),
+                          borderSide: BorderSide(
+                            color: appColors.textPrimaryColor,
+                            width: 2, // Your desired focus color
+                          ),
+                        ),
                         prefixIcon: Icon(Icons.search, size: Sizes.icon24),
                         contentPadding: EdgeInsets.symmetric(
                           vertical: 0,

@@ -22,6 +22,7 @@ class AppButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Sizes.radius12),
         ),
+        overlayColor: Colors.transparent,
       ),
       child: Text(
         text,

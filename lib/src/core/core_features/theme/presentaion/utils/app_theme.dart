@@ -123,9 +123,9 @@ class AppTheme {
 
   late final TextSelectionThemeData _textSelectionThemeData =
       TextSelectionThemeData(
-        cursorColor: _appColors.primaryColor,
-        selectionColor: _appColors.secondaryColor.withOpacity(0.5),
-        selectionHandleColor: _appColors.secondaryColor,
+        cursorColor: _appColors.textPrimaryColor,
+        selectionColor: _appColors.textPrimaryColor.withOpacity(0.5),
+        selectionHandleColor: _appColors.textPrimaryColor,
       );
 
   //TODO: in future if i want to add responsive texts and so on

@@ -6,6 +6,7 @@ import 'package:bad_habit_killer/src/core/presentation/helpers/app_gaps.dart';
 import 'package:bad_habit_killer/src/core/presentation/helpers/database_colors.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
 import 'package:bad_habit_killer/src/core/presentation/utils/riverpod_framework.dart';
+import 'package:bad_habit_killer/src/core/presentation/utils/validator.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/app_button.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/app_scaffold.dart';
 import 'package:bad_habit_killer/src/features/home/domain/create_habit.dart';
@@ -25,8 +26,10 @@ class AddHabitView extends StatefulHookConsumerWidget {
 class _AddHabitViewState extends ConsumerState<AddHabitView> {
   @override
   Widget build(BuildContext context) {
+    final formKey = useMemoized(() => GlobalKey<FormState>());
     final nameController = useTextEditingController(text: "");
     final descriptionController = useTextEditingController(text: "");
+
     final currentColor = useState<Color>(Colors.red);
 
     ref.listenAndHandleState(
@@ -66,69 +69,92 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Sizes.paddingH24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Start new life without'.hardcoded,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w300),
-                ),
-                gapH8,
-                TextFieldWithAnimatedHint(
-                  descriptionController: nameController,
-                  currentColor: currentColor.value,
-                  hintText: "What you want to exclude".hardcoded,
-                ),
+          Form(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Sizes.paddingH24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Start new life without'.hardcoded,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  gapH8,
+                  TextFieldWithAnimatedHint(
+                    validator: Validator.isNotEmpty,
+                    descriptionController: nameController,
+                    currentColor: currentColor.value,
+                    hintText: "What you want to exclude".hardcoded,
+                  ),
 
-                Text(
-                  "Add the reason".hardcoded,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w300),
-                ),
-                gapH8,
-                TextFieldWithAnimatedHint(
-                  descriptionController: descriptionController,
-                  currentColor: currentColor.value,
-                  hintText: "Why you want to exclude it".hardcoded,
-                ),
-                gapH16,
-                Text(
-                  'Select color'.hardcoded,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w300),
-                ),
-                gapH8,
-                ColorSelector(
-                  onColorSelected: (value) {
-                    currentColor.value = value;
-                  },
-                ),
+                  Text(
+                    "Add the reason".hardcoded,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  gapH8,
+                  TextFieldWithAnimatedHint(
+                    validator: Validator.isNotEmpty,
+                    descriptionController: descriptionController,
+                    currentColor: currentColor.value,
+                    hintText: "Why you want to exclude it".hardcoded,
+                  ),
+                  gapH16,
+                  Text(
+                    'Select color'.hardcoded,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  gapH8,
+                  ColorSelector(
+                    onColorSelected: (value) {
+                      currentColor.value = value;
+                    },
+                  ),
 
-                gapH16,
-                AppButton(
-                  isLoading: ref.isLoading(createHabitProvider),
-                  text: "Add Habit".hardcoded,
-                  onPressed: () {
-                    final habit = CreateHabitModel(
-                      name: nameController.text,
-                      description: descriptionController.text,
-                      color: DatabaseColors.colorToString(currentColor.value),
-                      startDate: DateTime.now().toIso8601String(),
-                    );
-                    ref.read(createHabitProvider.notifier).createHabit(habit);
-                  },
-                ),
-              ],
+                  gapH16,
+                  AppButton(
+                    isLoading: ref.isLoading(createHabitProvider),
+                    text: "Add Habit".hardcoded,
+                    onPressed: () {
+                      _submitForm(
+                        formKey,
+                        nameController,
+                        descriptionController,
+                        currentColor,
+                        ref,
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+void _submitForm(
+  GlobalKey<FormState> formKey,
+  TextEditingController nameController,
+  TextEditingController descriptionController,
+  ValueNotifier<Color> currentColor,
+  WidgetRef ref,
+) {
+  if (formKey.currentState?.validate() ?? false) {
+    final habit = CreateHabitModel(
+      name: nameController.text,
+      description: descriptionController.text,
+      color: DatabaseColors.colorToString(currentColor.value),
+      startDate: DateTime.now().toIso8601String(),
+    );
+    ref.read(createHabitProvider.notifier).createHabit(habit);
   }
 }
