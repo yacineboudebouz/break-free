@@ -1,5 +1,5 @@
-import 'package:bad_habit_killer/src/core/presentation/extensions/app_error_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
+import 'package:bad_habit_killer/src/core/presentation/extensions/go_router_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/widget_ref_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/helpers/app_gaps.dart';
@@ -36,7 +36,7 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
       createHabitProvider,
       handleData: true,
       whenData: (data) {
-        context.pop();
+        context.popG();
       },
     );
     return AppScaffold(

@@ -137,7 +137,7 @@ class AppTheme {
       scaffoldBackgroundColor: _scaffoldBackgroundColor,
       colorScheme: _colorScheme,
       dividerColor: _themeMode.dividerBorder.color,
-
+      cardColor: _appColors.cardBGColor,
       iconTheme: _iconTheme,
       textTheme: _textTheme,
       focusColor: _appColors.appBarColor,

@@ -3,7 +3,6 @@ import 'package:bad_habit_killer/src/features/home/domain/create_habit.dart';
 import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
 import 'package:bad_habit_killer/src/features/home/domain/relapse_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:logger/logger.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

@@ -1,4 +1,3 @@
-import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldWithAnimatedHint extends StatelessWidget {

@@ -1,10 +1,11 @@
+import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
-    required this.isLoading,
+    this.isLoading = false,
     required this.text,
     required this.onPressed,
   });
@@ -25,7 +26,7 @@ class AppButton extends StatelessWidget {
         overlayColor: Colors.transparent,
       ),
       child: Text(
-        text,
+        isLoading ? "Loading...".hardcoded : text,
         style: Theme.of(
           context,
         ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),

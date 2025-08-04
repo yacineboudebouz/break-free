@@ -2,8 +2,6 @@ import 'package:bad_habit_killer/src/core/config/routing/animations/transition_f
 import 'package:bad_habit_killer/src/core/presentation/screens/error_builder_screen.dart';
 import 'package:bad_habit_killer/src/features/home/view/add_habit_view.dart';
 import 'package:bad_habit_killer/src/features/home/view/home_view.dart';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

@@ -38,7 +38,7 @@ class AppColorsLight extends AppColors {
 
   // Card Colors
   @override
-  Color get cardBGColor => const Color(0xFFFFFFFF); // White
+  Color get cardBGColor => const Color(0xFFF5F3F0); // White
 
   @override
   Color get cardShadowColor => const Color(0x1A000000); // Black with 10% opacity

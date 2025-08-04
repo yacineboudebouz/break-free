@@ -18,7 +18,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
     return value.when(
       skipLoadingOnRefresh: true,
       data: data,
-      loading: () => LoaderIndicator(),
+      loading: () => Center(child: LoaderIndicator()),
       error: (error, stackTrace) {
         return AppErrorWidget(error: error, onRetry: onRetry);
       },

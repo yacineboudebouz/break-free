@@ -12,7 +12,8 @@ extension Router on BuildContext {
     }
   }
 
-  void pop() {
+  /// pop the latest `route` in the stack
+  void popG() {
     GoRouter.of(this).pop();
   }
 }

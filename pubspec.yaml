@@ -85,6 +85,8 @@ dev_dependencies:
   # Testing
   mocktail: ^1.0.1
   freezed: ^2.5.8
+  custom_lint: ^0.7.3
+  riverpod_lint: ^2.6.4
 
 
 # For information on the generic Dart part of this file, see the

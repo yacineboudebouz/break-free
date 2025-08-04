@@ -68,6 +68,10 @@ abstract class Sizes {
   /// here for `border` sizes
   static const double borderWidth1 = 1.0;
   static const double borderWidth2 = 2.0;
+  static const double borderWidth4 = 4.0;
+  static const double borderWidth8 = 8.0;
+  static const double borderWidth12 = 12.0;
+  static const double borderWidth16 = 16.0;
 
   /// here for `spacing` sizes
   static const double spacing8 = 8.0;

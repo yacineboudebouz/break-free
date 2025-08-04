@@ -12,6 +12,7 @@ import 'package:bad_habit_killer/src/core/presentation/widgets/app_scaffold.dart
 import 'package:bad_habit_killer/src/core/presentation/widgets/async_value_widget.dart';
 import 'package:bad_habit_killer/src/features/home/data/repository/habits_repository.dart';
 import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
+import 'package:bad_habit_killer/src/features/home/view/widgets/habit_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends HookConsumerWidget {
@@ -33,14 +34,12 @@ class HomeView extends HookConsumerWidget {
               // this just for demo purposes
               //TODO: implement a proper drawer and clean up this code
               Switch(
-                value:
-                    ref.watch(currentAppThemeModeProvider) ==
-                    AppThemeMode.light,
+                value: ref.watch(currentAppThemeModeProvider).isDarkTheme,
                 onChanged: (value) {
                   ref
                       .read(appThemeNotifierProvider.notifier)
                       .changeTheme(
-                        value ? AppThemeMode.light : AppThemeMode.dark,
+                        value ? AppThemeMode.dark : AppThemeMode.light,
                       );
                 },
               ),
@@ -49,7 +48,6 @@ class HomeView extends HookConsumerWidget {
         ),
       ),
       body: Column(
-        spacing: Sizes.spacing8,
         children: [
           Container(
             height: context.height * 0.12,
@@ -104,15 +102,20 @@ class HomeView extends HookConsumerWidget {
           Expanded(
             child: AsyncValueWidget<List<HabitModel>>(
               value: allHabits,
-              data: (habit) {
+              data: (habits) {
                 return ListView.builder(
-                  itemCount: habit.length,
+                  physics: BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
+                  itemCount: habits.length,
                   itemBuilder: (context, index) {
-                    final item = habit[index];
-                    return ListTile(
-                      title: Text(item.name),
-                      subtitle: Text(item.description),
-                      onTap: () {},
+                    final habit = habits[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Sizes.paddingH16,
+                        vertical: Sizes.paddingV8,
+                      ),
+                      child: HabitWidget(habit: habit),
                     );
                   },
                 );
