@@ -1,4 +1,6 @@
+import 'package:bad_habit_killer/src/core/presentation/helpers/database_colors.dart';
 import 'package:bad_habit_killer/src/features/home/domain/relapse_model.dart';
+import 'package:flutter/services.dart';
 
 class HabitModel {
   final int id;
@@ -45,4 +47,80 @@ class HabitModel {
     color: map['color'] as String,
     relapses: relapses,
   );
+
+  Color get colorValue {
+    return DatabaseColors.fromString(color);
+  }
+
+  int get attempt => relapses.length + 1;
+  DateTime get lastRelapseDate {
+    if (relapses.isEmpty) {
+      return startDate;
+    }
+    return relapses.last.date;
+  }
+
+  int get currentProgress {
+    final differenceInDays = DateTime.now().difference(lastRelapseDate).inDays;
+    return differenceInDays;
+  }
+
+  int get record {
+    if (relapses.isEmpty) {
+      return currentProgress;
+    }
+    final maxDays = relapses.fold<int>(0, (max, relapse) {
+      final daysSinceLastRelapse = relapse.date.difference(startDate).inDays;
+      return daysSinceLastRelapse > max ? daysSinceLastRelapse : max;
+    });
+    return maxDays;
+  }
+
+  int get goal {
+    return goals.firstWhere((goal) => goal > currentProgress);
+  }
+
+  double get progress {
+    final goalValue = goal.toDouble();
+    return (currentProgress / goalValue).clamp(0.0, 1.0);
+  }
+
+  static List<int> goals = [
+    3,
+    7,
+    14,
+    21,
+    30,
+    60,
+    90,
+    120,
+    150,
+    180,
+    210,
+    240,
+    270,
+    300,
+    330,
+    365,
+    730,
+    995,
+    1095,
+    1460,
+    1825,
+    2190,
+    2555,
+    2920,
+    3285,
+    3650,
+    4015,
+    4380,
+    4745,
+    5110,
+    5475,
+    5840,
+    6205,
+    6570,
+    6935,
+    7300,
+  ];
 }

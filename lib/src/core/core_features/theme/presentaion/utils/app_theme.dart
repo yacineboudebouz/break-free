@@ -100,6 +100,18 @@ class AppTheme {
       color: _appColors.textPrimaryColor,
       fontSize: Sizes.font20,
     ),
+    titleSmall: _baseTheme.textTheme.titleSmall?.copyWith(
+      color: _appColors.textPrimaryColor,
+      fontSize: Sizes.font16,
+    ),
+    titleMedium: _baseTheme.textTheme.titleMedium?.copyWith(
+      color: _appColors.textPrimaryColor,
+      fontSize: Sizes.font18,
+    ),
+    titleLarge: _baseTheme.textTheme.titleLarge?.copyWith(
+      color: _appColors.textPrimaryColor,
+      fontSize: Sizes.font24,
+    ),
   );
 
   late final FloatingActionButtonThemeData _actionButtonThemeData =

@@ -10,6 +10,7 @@ import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
 import 'package:bad_habit_killer/src/core/presentation/utils/riverpod_framework.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/app_scaffold.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/async_value_widget.dart';
+import 'package:bad_habit_killer/src/core/presentation/widgets/interactive_layer/interactive_layer.dart';
 import 'package:bad_habit_killer/src/features/home/data/repository/habits_repository.dart';
 import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
 import 'package:bad_habit_killer/src/features/home/view/widgets/habit_widget.dart';
@@ -115,7 +116,10 @@ class HomeView extends HookConsumerWidget {
                         horizontal: Sizes.paddingH16,
                         vertical: Sizes.paddingV8,
                       ),
-                      child: HabitWidget(habit: habit),
+                      child: InteractiveLayer(
+                        config: InteractionConfig.scaleIn,
+                        child: HabitWidget(habit: habit),
+                      ),
                     );
                   },
                 );

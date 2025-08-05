@@ -3,11 +3,11 @@ import 'dart:convert';
 
 class RelapseModel {
   int id;
-  String date;
+  DateTime date;
   String note;
   RelapseModel({required this.id, required this.date, required this.note});
 
-  RelapseModel copyWith({int? id, String? date, String? note}) {
+  RelapseModel copyWith({int? id, DateTime? date, String? note}) {
     return RelapseModel(
       id: id ?? this.id,
       date: date ?? this.date,
@@ -22,7 +22,7 @@ class RelapseModel {
   factory RelapseModel.fromMap(Map<String, dynamic> map) {
     return RelapseModel(
       id: map['id'] as int,
-      date: map['date'] as String,
+      date: DateTime.parse(map['date'] as String),
       note: map['note'] as String,
     );
   }
