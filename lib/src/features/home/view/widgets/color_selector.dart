@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class ColorSelector extends HookConsumerWidget {
-  ColorSelector({super.key, this.onColorSelected});
+  const ColorSelector({super.key, this.onColorSelected});
 
   final ValueChanged<Color>? onColorSelected;
   @override

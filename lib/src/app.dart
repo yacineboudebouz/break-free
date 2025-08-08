@@ -10,12 +10,11 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(currentAppThemeModeProvider);
     final router = ref.watch(goRouterProvider);
-    final currentTheme = theme.getThemeData();
+    final currentTheme = theme.themeData;
     return MaterialApp.router(
       title: 'Bad Habit Killer',
       theme: currentTheme,
       routerConfig: router,
-
       debugShowCheckedModeBanner: false,
     );
   }

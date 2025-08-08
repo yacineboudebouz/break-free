@@ -9,11 +9,7 @@ enum AppThemeMode {
   light,
   dark;
 
-  ThemeData getThemeData(
-    // we can add more parameters in the future if needed
-  ) {
-    return AppTheme(themeMode: this).getThemeData();
-  }
+  ThemeData get themeData => AppTheme(themeMode: this).themeData;
 
   AppColors get appColors {
     return AppTheme(themeMode: this)._appColors;
@@ -143,7 +139,7 @@ class AppTheme {
   //TODO: in future if i want to add responsive texts and so on
   // i just have to add flutter screenutil package and create other custom classes
   // to handle screen sizes and responsive texts and just add them here with base theme
-  ThemeData getThemeData() {
+  ThemeData get themeData {
     return _baseTheme.copyWith(
       primaryColor: primaryColor,
       scaffoldBackgroundColor: _scaffoldBackgroundColor,

@@ -148,7 +148,7 @@ void _submitForm(
   ValueNotifier<Color> currentColor,
   WidgetRef ref,
 ) {
-  if (formKey.currentState?.validate() ?? false) {
+  if (formKey.currentState!.validate()) {
     final habit = CreateHabitModel(
       name: nameController.text,
       description: descriptionController.text,

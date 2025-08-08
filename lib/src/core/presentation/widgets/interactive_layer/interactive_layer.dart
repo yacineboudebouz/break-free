@@ -28,6 +28,7 @@ class _InteractiveLayerState extends State<InteractiveLayer>
   late Animation<double> _glowAnimation;
   late Animation<Offset> _offsetAnimation;
   late Animation<double> _fadeAnimation;
+  // ignore: unused_field
   bool _isHovered = false;
 
   @override

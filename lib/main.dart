@@ -37,11 +37,9 @@ class _EagerInitialization extends ConsumerWidget {
       ref.watch(sharedPreferencesProvider),
       ref.watch(databaseProvider),
     ];
-
     if (values.every((value) => value.hasValue || value.hasError)) {
       return child;
     }
-
     return SplashScreen();
   }
 }
