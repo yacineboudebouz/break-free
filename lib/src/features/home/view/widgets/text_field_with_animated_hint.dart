@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 class TextFieldWithAnimatedHint extends StatelessWidget {
   const TextFieldWithAnimatedHint({
     super.key,
-    required this.descriptionController,
+    required this.controller,
     required this.currentColor,
     required this.hintText,
     this.validator,
   });
 
-  final TextEditingController descriptionController;
+  final TextEditingController controller;
   final Color currentColor;
   final String hintText;
   final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: descriptionController,
+      controller: controller,
       validator: validator,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(0),

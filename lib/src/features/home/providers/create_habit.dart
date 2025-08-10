@@ -15,7 +15,7 @@ class CreateHabit extends _$CreateHabit {
   Future<void> createHabit(CreateHabitModel createHabit) async {
     try {
       state = const AsyncLoading();
-      await Future.delayed(const Duration(seconds: 1));
+
       await ref.read(habitsRepositoryProvider).createHabit(createHabit);
       ref.invalidate(allHabitsProvider);
       state = const AsyncData(null);

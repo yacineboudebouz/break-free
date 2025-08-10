@@ -1,4 +1,5 @@
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
+import 'package:bad_habit_killer/src/core/presentation/extensions/datetime_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/go_router_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/widget_ref_ext.dart';
@@ -31,7 +32,7 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
     final descriptionController = useTextEditingController(text: "");
 
     final currentColor = useState<Color>(Colors.red);
-
+    final startDate = useState<DateTime>(DateTime.now());
     ref.listenAndHandleState(
       createHabitProvider,
       handleData: true,
@@ -85,7 +86,7 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
                   gapH8,
                   TextFieldWithAnimatedHint(
                     validator: Validator.isNotEmpty,
-                    descriptionController: nameController,
+                    controller: nameController,
                     currentColor: currentColor.value,
                     hintText: "What you want to exclude".hardcoded,
                   ),
@@ -99,9 +100,35 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
                   gapH8,
                   TextFieldWithAnimatedHint(
                     validator: Validator.isNotEmpty,
-                    descriptionController: descriptionController,
+                    controller: descriptionController,
                     currentColor: currentColor.value,
                     hintText: "Why you want to exclude it".hardcoded,
+                  ),
+                  Text(
+                    'Select start date'.hardcoded,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  gapH8,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        startDate.value.formatted,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w300,
+                          color: currentColor.value,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.calendar_today_outlined),
+                        onPressed: () async {
+                          final selectedDate = await _selectDateTime(context);
+                          startDate.value = selectedDate;
+                        },
+                      ),
+                    ],
                   ),
                   gapH16,
                   Text(
@@ -126,6 +153,7 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
                         formKey,
                         nameController,
                         descriptionController,
+                        startDate.value,
                         currentColor,
                         ref,
                       );
@@ -145,6 +173,7 @@ void _submitForm(
   GlobalKey<FormState> formKey,
   TextEditingController nameController,
   TextEditingController descriptionController,
+  DateTime startDate,
   ValueNotifier<Color> currentColor,
   WidgetRef ref,
 ) {
@@ -153,8 +182,39 @@ void _submitForm(
       name: nameController.text,
       description: descriptionController.text,
       color: DatabaseColors.colorToString(currentColor.value),
-      startDate: DateTime.now().toIso8601String(),
+      startDate: startDate.toIso8601String(),
     );
     ref.read(createHabitProvider.notifier).createHabit(habit);
   }
+}
+
+Future<DateTime> _selectDateTime(BuildContext context) async {
+  DateTime? selectedDate;
+
+  final date = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime.now(),
+    initialEntryMode: DatePickerEntryMode.calendarOnly,
+  );
+  if (date != null) {
+    final time = await showTimePicker(
+      initialEntryMode: TimePickerEntryMode.dialOnly,
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (time != null) {
+      selectedDate = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        time.hour,
+        time.minute,
+      );
+    } else {
+      selectedDate = date;
+    }
+  }
+  return selectedDate ?? DateTime.now();
 }

@@ -3,7 +3,7 @@ part of '../../../../main.dart';
 Future<ProviderContainer> _mainInitializer() async {
   _setupLogger();
 
-  final container = ProviderContainer(observers: [ProviderLogger()]);
+  final container = ProviderContainer(observers: [TalkerRiverpodObserver()]);
   return container;
 }
 

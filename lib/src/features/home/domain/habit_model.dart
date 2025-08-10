@@ -1,6 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/services.dart';
+
 import 'package:bad_habit_killer/src/core/presentation/helpers/database_colors.dart';
 import 'package:bad_habit_killer/src/features/home/domain/relapse_model.dart';
-import 'package:flutter/services.dart';
 
 class HabitModel {
   final int id;
@@ -123,4 +125,9 @@ class HabitModel {
     6935,
     7300,
   ];
+
+  @override
+  String toString() {
+    return 'HabitModel(id: $id, name: $name, startDate: $startDate, description: $description, color: $color, relapses: $relapses)';
+  }
 }

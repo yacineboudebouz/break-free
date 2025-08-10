@@ -8,6 +8,7 @@ import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dar
 import 'package:bad_habit_killer/src/core/presentation/helpers/app_gaps.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
 import 'package:bad_habit_killer/src/core/presentation/utils/riverpod_framework.dart';
+import 'package:bad_habit_killer/src/core/presentation/widgets/animated_list.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/app_scaffold.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/async_value_widget.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/interactive_layer/interactive_layer.dart';
@@ -104,24 +105,20 @@ class HomeView extends HookConsumerWidget {
             child: AsyncValueWidget<List<HabitModel>>(
               value: allHabits,
               data: (habits) {
-                return ListView.builder(
-                  physics: BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics(),
+                return AppAnimatedList(
+                  separatorBuilder: (context, index) => gapH8,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Sizes.paddingH16,
+                    vertical: Sizes.paddingV16,
                   ),
-                  itemCount: habits.length,
                   itemBuilder: (context, index) {
                     final habit = habits[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Sizes.paddingH16,
-                        vertical: Sizes.paddingV8,
-                      ),
-                      child: InteractiveLayer(
-                        config: InteractionConfig.scaleIn,
-                        child: HabitWidget(habit: habit),
-                      ),
+                    return InteractiveLayer(
+                      config: InteractionConfig.scaleIn,
+                      child: HabitWidget(habit: habit),
                     );
                   },
+                  itemCount: habits.length,
                 );
               },
               onRetry: () {

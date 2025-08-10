@@ -1,4 +1,5 @@
 import 'package:bad_habit_killer/src/core/presentation/extensions/app_error_ext.dart';
+import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/app_button.dart';
@@ -17,7 +18,10 @@ class AppErrorWidget extends StatelessWidget {
       children: [
         Text(message, textAlign: TextAlign.center),
         const SizedBox(height: Sizes.spacing16),
-        AppButton(text: 'Retry'.hardcoded, onPressed: onRetry),
+        SizedBox(
+          width: context.width * 0.8,
+          child: AppButton(text: 'Retry'.hardcoded, onPressed: onRetry),
+        ),
       ],
     );
   }

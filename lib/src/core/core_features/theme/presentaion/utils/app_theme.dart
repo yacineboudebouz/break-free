@@ -112,9 +112,13 @@ class AppTheme {
 
   late final FloatingActionButtonThemeData _actionButtonThemeData =
       FloatingActionButtonThemeData(
-        backgroundColor: _appColors.tertiaryColor,
+        backgroundColor: _appColors.textPrimaryColor,
         foregroundColor: _appColors.scaffoldBGColor,
         elevation: 2.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Sizes.radius32),
+          side: BorderSide(color: _appColors.dividerColor, width: 1.0),
+        ),
       );
 
   // here for input decoration theme
@@ -136,6 +140,44 @@ class AppTheme {
         selectionHandleColor: _appColors.textPrimaryColor,
       );
 
+  late final DatePickerThemeData _datePickerThemeData = DatePickerThemeData(
+    backgroundColor: _appColors.scaffoldBGColor,
+    dayStyle: TextStyle(color: _appColors.textPrimaryColor),
+    headerBackgroundColor: _appColors.appBarColor,
+    headerForegroundColor: _appColors.textPrimaryColor,
+    surfaceTintColor: Colors.transparent,
+    confirmButtonStyle: TextButton.styleFrom(
+      foregroundColor: _appColors.textPrimaryColor,
+    ),
+    cancelButtonStyle: TextButton.styleFrom(
+      foregroundColor: _appColors.textPrimaryColor,
+    ),
+  );
+
+  late final TimePickerThemeData _timePickerThemeData = TimePickerThemeData(
+    backgroundColor: _appColors.scaffoldBGColor,
+    hourMinuteTextColor: _appColors.textPrimaryColor,
+    dialBackgroundColor: _appColors.appBarColor,
+    entryModeIconColor: _appColors.textPrimaryColor,
+    hourMinuteColor: _appColors.primaryColor,
+    hourMinuteTextStyle: _baseTheme.timePickerTheme.hourMinuteTextStyle
+        ?.copyWith(color: _appColors.scaffoldBGColor),
+
+    cancelButtonStyle: TextButton.styleFrom(
+      foregroundColor: _appColors.textPrimaryColor,
+    ),
+    confirmButtonStyle: TextButton.styleFrom(
+      foregroundColor: _appColors.textPrimaryColor,
+    ),
+
+    dialHandColor: _appColors.primaryColor,
+    hourMinuteShape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(Sizes.radius32),
+      side: BorderSide(color: _appColors.dividerColor, width: 1.0),
+    ),
+    dialTextColor: _appColors.textPrimaryColor,
+  );
+
   //TODO: in future if i want to add responsive texts and so on
   // i just have to add flutter screenutil package and create other custom classes
   // to handle screen sizes and responsive texts and just add them here with base theme
@@ -145,6 +187,8 @@ class AppTheme {
       scaffoldBackgroundColor: _scaffoldBackgroundColor,
       colorScheme: _colorScheme,
       dividerColor: _themeMode.dividerBorder.color,
+      datePickerTheme: _datePickerThemeData,
+      timePickerTheme: _timePickerThemeData,
       cardColor: _appColors.cardBGColor,
       iconTheme: _iconTheme,
       textTheme: _textTheme,

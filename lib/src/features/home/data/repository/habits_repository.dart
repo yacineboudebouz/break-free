@@ -30,7 +30,7 @@ class HabitsRepository {
     return await habitsDatasource
         .createHabit(habit)
         .handleRepositoryErrors(
-          // throwForTest: true,
+          throwForTest: true,
           specificErrorType: CacheExceptionType.createHabitFailed,
         );
   }

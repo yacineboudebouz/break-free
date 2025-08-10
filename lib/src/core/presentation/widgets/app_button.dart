@@ -1,5 +1,6 @@
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
+import 'package:bad_habit_killer/src/core/presentation/widgets/loader_indicator.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
@@ -25,12 +26,14 @@ class AppButton extends StatelessWidget {
         ),
         overlayColor: Colors.transparent,
       ),
-      child: Text(
-        isLoading ? "Loading...".hardcoded : text,
-        style: Theme.of(
-          context,
-        ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
-      ),
+      child: isLoading
+          ? LoaderIndicator()
+          : Text(
+              text,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
+            ),
     );
   }
 }
