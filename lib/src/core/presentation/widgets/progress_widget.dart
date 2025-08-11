@@ -11,10 +11,12 @@ class ProgressWidget extends StatelessWidget {
     required this.value,
     required this.color,
     this.strokeWidth = Sizes.borderWidth12,
+    this.ringColor = Colors.white,
   });
   final double value;
   final Color color;
   final double strokeWidth;
+  final Color ringColor;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class ProgressWidget extends StatelessWidget {
           color: color,
           progress: value,
           strokeWidth: strokeWidth,
+          ringColor: ringColor,
         ),
       ),
     );
@@ -36,10 +39,12 @@ class ProgressPainter extends CustomPainter {
     required this.progress,
     required this.color,
     required this.strokeWidth,
+    required this.ringColor,
   });
   final double progress;
   final Color color;
   final double strokeWidth;
+  final Color ringColor;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -51,7 +56,7 @@ class ProgressPainter extends CustomPainter {
       final backgroundPaint = Paint()
         ..isAntiAlias = true
         ..strokeWidth = strokeWidth
-        ..color = Colors.white
+        ..color = ringColor
         ..style = PaintingStyle.stroke;
       canvas.drawCircle(center, radius, backgroundPaint);
     }

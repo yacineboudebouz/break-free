@@ -28,7 +28,7 @@ GoRouter goRouter(Ref ref) {
             path: 'add-habit',
             name: AppRouter.addHabit.name,
             pageBuilder: (_, __) {
-              return slideRightTransition(child: AddHabitView(), duration: 800);
+              return slideRightTransition(child: AddHabitView());
             },
           ),
           GoRoute(
@@ -36,8 +36,8 @@ GoRouter goRouter(Ref ref) {
             name: AppRouter.habitDetails.name,
             pageBuilder: (context, state) {
               final habitId = state.pathParameters['habitId'];
-
               return heroTransition(
+                duration: 500,
                 child: HabitDetailsView(id: int.parse(habitId!)),
               );
             },

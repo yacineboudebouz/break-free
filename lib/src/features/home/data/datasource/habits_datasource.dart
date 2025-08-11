@@ -1,4 +1,5 @@
 import 'package:bad_habit_killer/src/core/core_features/database/app_database.dart';
+import 'package:bad_habit_killer/src/features/home/domain/add_relapse.dart';
 import 'package:bad_habit_killer/src/features/home/domain/create_habit.dart';
 import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
 import 'package:bad_habit_killer/src/features/home/domain/relapse_model.dart';
@@ -30,7 +31,7 @@ class HabitsDatasource {
     for (var habit in habits) {
       final habitId = habit['id'];
       final List<Map<String, dynamic>> relapses = await database.query(
-        'relapses',
+        DatabaseTables.relapses,
         where: 'habit_id = ?',
         whereArgs: [habitId],
         orderBy: 'relapse_date DESC',
@@ -48,5 +49,9 @@ class HabitsDatasource {
     }
 
     return habitModels;
+  }
+
+  Future<int> addRelapse(AddRelapse addRelapse) async {
+    return await database.insert(DatabaseTables.relapses, addRelapse.toMap());
   }
 }

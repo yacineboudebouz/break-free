@@ -31,9 +31,7 @@ class _AppAnimatedListState extends State<AppAnimatedList>
   late AnimationController _controller;
   List<Animation<double>> _animations = [];
 
-  @override
-  void initState() {
-    super.initState();
+  void _initializeController() {
     final totalDuration = Duration(
       milliseconds:
           (widget.itemCount * widget.animationConfig.staggerDelay) +
@@ -42,6 +40,12 @@ class _AppAnimatedListState extends State<AppAnimatedList>
     _controller = AnimationController(vsync: this, duration: totalDuration);
     _setupAnimations();
     _controller.forward();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeController();
   }
 
   void _setupAnimations() {
@@ -72,13 +76,7 @@ class _AppAnimatedListState extends State<AppAnimatedList>
   void didUpdateWidget(covariant AppAnimatedList oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.itemCount != oldWidget.itemCount) {
-      final totalDuration = Duration(
-        milliseconds:
-            (widget.itemCount * widget.animationConfig.staggerDelay) +
-            widget.animationConfig.duration.inMilliseconds,
-      );
-      _controller.dispose();
-      _controller = AnimationController(vsync: this, duration: totalDuration);
+      _controller.reset();
       _setupAnimations();
       _controller.forward();
     }

@@ -1,4 +1,3 @@
-import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/providers/current_app_theme_provider.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
@@ -12,11 +11,9 @@ class RelapseButton extends HookConsumerWidget {
   final VoidCallback? onPressed;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final height = context.height * 0.08;
+    final height = context.height * 0.06;
     final width = context.width * 0.35;
-    final oppositeAppColors = ref
-        .watch(currentAppThemeModeProvider)
-        .oppositeAppColors;
+
     return GestureDetector(
       onTap: onPressed,
       child: AnimatedContainer(

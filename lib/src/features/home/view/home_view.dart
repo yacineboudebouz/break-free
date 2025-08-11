@@ -14,6 +14,7 @@ import 'package:bad_habit_killer/src/core/presentation/widgets/async_value_widge
 import 'package:bad_habit_killer/src/core/presentation/widgets/interactive_layer/interactive_layer.dart';
 import 'package:bad_habit_killer/src/features/home/data/repository/habits_repository.dart';
 import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
+import 'package:bad_habit_killer/src/features/home/providers/multi_habits.dart';
 import 'package:bad_habit_killer/src/features/home/view/widgets/habit_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class HomeView extends HookConsumerWidget {
   static final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final allHabits = ref.watch(allHabitsProvider);
+    final allHabits = ref.watch(multiHabitsProvider);
     final appColors = ref.watch(currentAppThemeModeProvider).appColors;
     return AppScaffold(
       scaffoldKey: drawerKey,

@@ -1,4 +1,3 @@
-import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/loader_indicator.dart';
 import 'package:flutter/material.dart';

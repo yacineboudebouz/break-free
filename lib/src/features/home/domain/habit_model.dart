@@ -27,6 +27,7 @@ class HabitModel {
     DateTime? startDate,
     String? description,
     String? color,
+    List<RelapseModel>? relapses,
   }) {
     return HabitModel(
       id: id ?? this.id,
@@ -34,7 +35,7 @@ class HabitModel {
       startDate: startDate ?? this.startDate,
       description: description ?? this.description,
       color: color ?? this.color,
-      relapses: List<RelapseModel>.from(relapses),
+      relapses: relapses ?? this.relapses,
     );
   }
 
@@ -59,7 +60,10 @@ class HabitModel {
     if (relapses.isEmpty) {
       return startDate;
     }
-    return relapses.last.date;
+    final sortedByDate =
+        relapses.where((relapse) => relapse.date.isAfter(startDate)).toList()
+          ..sort((a, b) => a.date.compareTo(b.date));
+    return sortedByDate.last.date;
   }
 
   int get currentProgress {
