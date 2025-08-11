@@ -1,5 +1,6 @@
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
+import 'package:bad_habit_killer/src/core/presentation/extensions/widget_ref_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/helpers/app_gaps.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
 import 'package:bad_habit_killer/src/core/presentation/utils/riverpod_framework.dart';
@@ -21,12 +22,13 @@ class HabitDetailsView extends HookConsumerWidget {
   final int id;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final habit = ref.watch(singleHabitProvider(id));
+    final habitAsync = ref.watch(singleHabitProvider(id));
     final controller = ref.watch(habitControllerProvider);
-    return AsyncValueWidget(
-      value: habit,
-      data: (habit) => AppScaffold(
-        body: Column(
+    ref.listenAndHandleState(habitControllerProvider);
+    return AppScaffold(
+      body: AsyncValueWidget(
+        value: habitAsync,
+        data: (habit) => Column(
           children: [
             Container(
               height: context.height * 0.12,
@@ -110,8 +112,8 @@ class HabitDetailsView extends HookConsumerWidget {
             ),
           ],
         ),
+        onRetry: () {},
       ),
-      onRetry: () {},
     );
   }
 }

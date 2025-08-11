@@ -16,18 +16,15 @@ class MultiHabits extends _$MultiHabits {
   }
 
   void addRelapseToHabit(RelapseModel relapse, int id) {
-    state = state.whenData((habits) {
-      final habitIndex = habits.indexWhere((habit) => habit.id == id);
-      if (habitIndex != -1) {
-        final updatedRelapses = [...habits[habitIndex].relapses, relapse];
-        final updatedHabit = habits[habitIndex].copyWith(
-          relapses: updatedRelapses,
-        );
-        final updatedHabits = List<HabitModel>.from(habits);
-        updatedHabits[habitIndex] = updatedHabit;
-        return updatedHabits;
-      }
-      return habits;
-    });
+    if (state.hasValue) {
+      final currentHabits = state.value!;
+      final updatedHabits = currentHabits.map((habit) {
+        if (habit.id == id) {
+          return habit.copyWith(relapses: [...habit.relapses, relapse]);
+        }
+        return habit;
+      }).toList();
+      state = AsyncValue.data(updatedHabits);
+    }
   }
 }

@@ -8,7 +8,10 @@ part 'single_habit.g.dart';
 class SingleHabit extends _$SingleHabit {
   @override
   FutureOr<HabitModel> build(int id) async {
-    final habits = await ref.watch(multiHabitsProvider.future);
+    // this is using read instead of watch, because a build will be triggred
+    // when we add relapse this happen because of riverpod dependency control
+    // out of my hand
+    final habits = await ref.read(multiHabitsProvider.future);
     return habits.firstWhere((habit) => habit.id == id);
   }
 

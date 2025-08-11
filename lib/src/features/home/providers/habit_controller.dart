@@ -7,7 +7,7 @@ part 'habit_controller.g.dart';
 @riverpod
 class HabitController extends _$HabitController {
   @override
-  FutureOr build() {}
+  FutureOr<void> build() {}
 
   Future<void> addRelapse(AddRelapse addRelapse) async {
     try {
@@ -18,7 +18,7 @@ class HabitController extends _$HabitController {
       ref
           .read(singleHabitProvider(addRelapse.habitId).notifier)
           .addRelapse(habit);
-      state = AsyncData(habit);
+      state = AsyncData(null);
     } catch (e, tr) {
       state = AsyncError(e, tr);
     }

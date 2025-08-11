@@ -31,6 +31,7 @@ class HabitsRepository {
   Future<HabitModel> createHabit(CreateHabitModel habit) async {
     final habitId = await executeWithErrorHandling(
       () => habitsDatasource.createHabit(habit),
+
       specificErrorType: CacheExceptionType.createHabitFailed,
     );
     return HabitModel(

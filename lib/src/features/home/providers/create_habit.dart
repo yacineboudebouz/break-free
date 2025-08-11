@@ -8,10 +8,6 @@ part 'create_habit.g.dart';
 class CreateHabit extends _$CreateHabit {
   @override
   FutureOr<void> build() {}
-
-  // TODO: i am not sure if i will just consider ivalidating the provider
-  // when the habit is created or if i will just return the created habit
-  // and change the state manually
   // read this: https://riverpod.dev/docs/essentials/side_effects
   Future<void> createHabit(CreateHabitModel createHabit) async {
     try {
