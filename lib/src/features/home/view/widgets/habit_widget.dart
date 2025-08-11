@@ -22,9 +22,12 @@ class HabitWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          ProgressWidget(
-            value: habit.progress,
-            color: DatabaseColors.fromString(habit.color),
+          Hero(
+            tag: 'progress_${habit.id}',
+            child: ProgressWidget(
+              value: habit.progress,
+              color: DatabaseColors.fromString(habit.color),
+            ),
           ),
           gapW4,
           Expanded(

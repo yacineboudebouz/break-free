@@ -102,6 +102,7 @@ class _InteractiveLayerState extends State<InteractiveLayer>
     return GestureDetector(
       onTapUp: (_) => _handleHover(false),
       onTapDown: (_) => _handleHover(true),
+      onTap: widget.onTap,
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {

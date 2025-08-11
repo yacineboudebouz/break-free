@@ -63,13 +63,15 @@ class HabitModel {
   }
 
   int get currentProgress {
-    final differenceInDays = DateTime.now().difference(lastRelapseDate).inDays;
-    return differenceInDays;
+    final differenceInSeconds = DateTime.now()
+        .difference(lastRelapseDate)
+        .inSeconds;
+    return differenceInSeconds;
   }
 
   int get record {
     if (relapses.isEmpty) {
-      return currentProgress;
+      return currentProgress ~/ 86400;
     }
     final maxDays = relapses.fold<int>(0, (max, relapse) {
       final daysSinceLastRelapse = relapse.date.difference(startDate).inDays;
@@ -79,11 +81,11 @@ class HabitModel {
   }
 
   int get goal {
-    return goals.firstWhere((goal) => goal > currentProgress);
+    return goals.firstWhere((goal) => goal > currentProgress / 86400);
   }
 
   double get progress {
-    final goalValue = goal.toDouble();
+    final goalValue = goal.toDouble() * 86400;
     return (currentProgress / goalValue).clamp(0.0, 1.0);
   }
 

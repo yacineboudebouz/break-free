@@ -27,16 +27,15 @@ class HabitsRepository {
   HabitsRepository(this.habitsDatasource);
 
   Future<int> createHabit(CreateHabitModel habit) async {
-    return await habitsDatasource
-        .createHabit(habit)
-        .handleRepositoryErrors(
-          throwForTest: true,
-          specificErrorType: CacheExceptionType.createHabitFailed,
-        );
+    return await executeWithErrorHandling(
+      () => habitsDatasource.createHabit(habit),
+      specificErrorType: CacheExceptionType.createHabitFailed,
+    );
   }
 
   Future<List<HabitModel>> getAllHabits() async {
-    return await habitsDatasource.getAllHabits().handleRepositoryErrors(
+    return await executeWithErrorHandling(
+      () => habitsDatasource.getAllHabits(),
       specificErrorType: CacheExceptionType.getAllHabitsFailed,
     );
   }

@@ -16,6 +16,7 @@ import 'package:bad_habit_killer/src/features/home/view/widgets/color_selector.d
 import 'package:bad_habit_killer/src/features/home/view/widgets/text_field_with_animated_hint.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+part 'add_habit_view_helper.dart';
 
 class AddHabitView extends StatefulHookConsumerWidget {
   const AddHabitView({super.key});
@@ -30,7 +31,6 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final nameController = useTextEditingController(text: "");
     final descriptionController = useTextEditingController(text: "");
-
     final currentColor = useState<Color>(Colors.red);
     final startDate = useState<DateTime>(DateTime.now());
     ref.listenAndHandleState(
@@ -90,7 +90,6 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
                     currentColor: currentColor.value,
                     hintText: "What you want to exclude".hardcoded,
                   ),
-
                   Text(
                     "Add the reason".hardcoded,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -114,12 +113,17 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        startDate.value.formatted,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.w300,
-                          color: currentColor.value,
-                        ),
+                      AnimatedDefaultTextStyle(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                        style:
+                            Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.w500,
+                              wordSpacing: 2,
+                              color: currentColor.value,
+                            ) ??
+                            const TextStyle(),
+                        child: Text(startDate.value.formatted),
                       ),
                       IconButton(
                         icon: const Icon(Icons.calendar_today_outlined),
@@ -167,54 +171,4 @@ class _AddHabitViewState extends ConsumerState<AddHabitView> {
       ),
     );
   }
-}
-
-void _submitForm(
-  GlobalKey<FormState> formKey,
-  TextEditingController nameController,
-  TextEditingController descriptionController,
-  DateTime startDate,
-  ValueNotifier<Color> currentColor,
-  WidgetRef ref,
-) {
-  if (formKey.currentState!.validate()) {
-    final habit = CreateHabitModel(
-      name: nameController.text,
-      description: descriptionController.text,
-      color: DatabaseColors.colorToString(currentColor.value),
-      startDate: startDate.toIso8601String(),
-    );
-    ref.read(createHabitProvider.notifier).createHabit(habit);
-  }
-}
-
-Future<DateTime> _selectDateTime(BuildContext context) async {
-  DateTime? selectedDate;
-
-  final date = await showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(2000),
-    lastDate: DateTime.now(),
-    initialEntryMode: DatePickerEntryMode.calendarOnly,
-  );
-  if (date != null) {
-    final time = await showTimePicker(
-      initialEntryMode: TimePickerEntryMode.dialOnly,
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-    if (time != null) {
-      selectedDate = DateTime(
-        date.year,
-        date.month,
-        date.day,
-        time.hour,
-        time.minute,
-      );
-    } else {
-      selectedDate = date;
-    }
-  }
-  return selectedDate ?? DateTime.now();
 }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 extension Router on BuildContext {
-  void goNamed(String name) {
-    GoRouter.of(this).goNamed(name);
+  void goNamed(String name, {Map<String, String> pathParameters = const {}}) {
+    GoRouter.of(this).goNamed(name, pathParameters: pathParameters);
   }
 
   void popN(int n) {

@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "bad_habit_killer",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "bad_habit_killer (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "bad_habit_killer (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },{
+            "name": "Flutter (Debug - No Impeller)",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--no-enable-impeller"]
+        },
+        {
+            "name": "Flutter (Debug - Default)",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}

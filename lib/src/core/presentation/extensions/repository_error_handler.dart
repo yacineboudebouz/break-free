@@ -1,19 +1,21 @@
 import 'package:bad_habit_killer/src/core/config/error/app_exception.dart';
 import 'package:sqflite/sqflite.dart';
 
-extension RepositoryErrorHandler<T> on Future<T> {
-  Future<T> handleRepositoryErrors({
+extension RepositoryErrorHandler on Object? {
+  Future<T> executeWithErrorHandling<T>(
+    Future<T> Function() operation, {
     CacheExceptionType? specificErrorType,
     bool throwForTest = false,
   }) async {
-    if (throwForTest) {
-      throw AppException.cacheException(
-        type: specificErrorType ?? CacheExceptionType.unknown,
-        message: 'Test exception thrown',
-      );
-    }
     try {
-      return await this;
+      if (throwForTest) {
+        throw AppException.cacheException(
+          type: specificErrorType ?? CacheExceptionType.unknown,
+          message: 'Test exception thrown',
+        );
+      }
+
+      return await operation();
     } on DatabaseException catch (e) {
       throw AppException.cacheException(
         type: specificErrorType ?? CacheExceptionType.unknown,

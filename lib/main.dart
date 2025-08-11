@@ -4,7 +4,6 @@ import 'package:bad_habit_killer/src/core/presentation/screens/splash_screen.dar
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:talker_riverpod_logger/talker_riverpod_logger_observer.dart';
 
 import 'src/core/config/services/logger.dart';
 import 'package:logging/logging.dart';
