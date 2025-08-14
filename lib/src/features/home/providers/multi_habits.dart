@@ -4,7 +4,7 @@ import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
 import 'package:bad_habit_killer/src/features/home/domain/relapse_model.dart';
 part 'multi_habits.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class MultiHabits extends _$MultiHabits {
   @override
   FutureOr<List<HabitModel>> build() async {

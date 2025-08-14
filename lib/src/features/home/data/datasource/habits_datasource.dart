@@ -30,6 +30,7 @@ class HabitsDatasource {
     List<HabitModel> habitModels = [];
     for (var habit in habits) {
       final habitId = habit['id'];
+
       final List<Map<String, dynamic>> relapses = await database.query(
         DatabaseTables.relapses,
         where: 'habit_id = ?',
@@ -39,15 +40,12 @@ class HabitsDatasource {
       List<RelapseModel> relapseModels = relapses.map((relapse) {
         return RelapseModel.fromMap(relapse);
       }).toList();
-
       HabitModel habitModel = HabitModel.fromMapWithRelapses(
         habit,
         relapses: relapseModels,
       );
-
       habitModels.add(habitModel);
     }
-
     return habitModels;
   }
 

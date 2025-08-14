@@ -3,7 +3,6 @@ import 'package:bad_habit_killer/src/core/presentation/screens/error_builder_scr
 import 'package:bad_habit_killer/src/features/home/view/add_habit/add_habit_view.dart';
 import 'package:bad_habit_killer/src/features/home/view/habit_details/habit_details_view.dart';
 import 'package:bad_habit_killer/src/features/home/view/home_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -27,14 +26,14 @@ GoRouter goRouter(Ref ref) {
           GoRoute(
             path: 'add-habit',
             name: AppRouter.addHabit.name,
-            pageBuilder: (_, __) {
+            pageBuilder: (_, _) {
               return slideRightTransition(child: AddHabitView());
             },
           ),
           GoRoute(
             path: '/habit-details/:habitId',
             name: AppRouter.habitDetails.name,
-            pageBuilder: (context, state) {
+            pageBuilder: (_, state) {
               final habitId = state.pathParameters['habitId'];
               return heroTransition(
                 duration: 500,

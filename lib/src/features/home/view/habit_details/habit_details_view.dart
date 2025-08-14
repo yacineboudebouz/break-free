@@ -9,6 +9,7 @@ import 'package:bad_habit_killer/src/core/presentation/widgets/async_value_widge
 import 'package:bad_habit_killer/src/core/presentation/widgets/interactive_layer/interactive_layer.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/progress_widget.dart';
 import 'package:bad_habit_killer/src/features/home/domain/add_relapse.dart';
+import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
 import 'package:bad_habit_killer/src/features/home/providers/habit_controller.dart';
 import 'package:bad_habit_killer/src/features/home/providers/single_habit.dart';
 import 'package:bad_habit_killer/src/features/home/view/widgets/habit_widget.dart';
@@ -16,6 +17,7 @@ import 'package:bad_habit_killer/src/features/home/view/widgets/relapse_button.d
 import 'package:bad_habit_killer/src/features/home/view/widgets/time_ticker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+part 'habit_details_view_helper.dart';
 
 class HabitDetailsView extends HookConsumerWidget {
   const HabitDetailsView({super.key, required this.id});
@@ -55,17 +57,43 @@ class HabitDetailsView extends HookConsumerWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: context.height * 0.3,
-              child: Hero(
-                tag: 'progress_$id',
-                child: ProgressWidget(
-                  ringColor: Theme.of(context).cardColor,
-                  strokeWidth: Sizes.borderWidth16,
-                  value: habit.progress,
-                  color: habit.colorValue,
+            Stack(
+              children: [
+                Center(
+                  child: SizedBox(
+                    height: context.height * 0.3,
+                    child: Hero(
+                      tag: 'progress_$id',
+                      child: ProgressWidget(
+                        ringColor: Theme.of(context).cardColor,
+                        strokeWidth: Sizes.borderWidth16,
+                        value: habit.progress,
+                        color: habit.colorValue,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                Positioned(
+                  right: 5,
+                  child: Column(
+                    children: [
+                      Text(
+                        "Current Goal",
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      Text(
+                        habit.goal.toString(),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: habit.colorValue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             TimeTicker(
               color: habit.colorValue,
@@ -88,18 +116,10 @@ class HabitDetailsView extends HookConsumerWidget {
                     config: InteractionConfig.scaleIn,
                     child: RelapseButton(
                       color: habit.colorValue,
-                      onPressed: controller.isLoading
-                          ? null
-                          : () {
-                              final relapse = AddRelapse(
-                                habitId: habit.id,
-                                relapseDate: DateTime.now(),
-                                note: null,
-                              );
-                              ref
-                                  .read(habitControllerProvider.notifier)
-                                  .addRelapse(relapse);
-                            },
+                      isLoading: controller.isLoading,
+                      onPressed: () {
+                        _addRelapse(ref, habit);
+                      },
                     ),
                   ),
                   ColumnItem(
@@ -110,6 +130,33 @@ class HabitDetailsView extends HookConsumerWidget {
                 ],
               ),
             ),
+            gapH12,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Sizes.paddingH32),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "History".hardcoded,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Add Comment'.hardcoded,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: habit.colorValue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Sizes.paddingH8),
+              child: Divider(),
+            ),
           ],
         ),
         onRetry: () {},
@@ -117,3 +164,5 @@ class HabitDetailsView extends HookConsumerWidget {
     );
   }
 }
+
+// TODO: this file is so huge, try to refactor it into smaller widgets or do something with it :)

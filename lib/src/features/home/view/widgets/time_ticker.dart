@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bad_habit_killer/src/core/presentation/utils/riverpod_framework.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TimeTicker extends HookConsumerWidget {
   const TimeTicker({super.key, required this.color, required this.dateTime});

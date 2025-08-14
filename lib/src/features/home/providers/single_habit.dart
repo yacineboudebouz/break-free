@@ -4,7 +4,7 @@ import 'package:bad_habit_killer/src/features/home/domain/relapse_model.dart';
 import 'package:bad_habit_killer/src/features/home/providers/multi_habits.dart';
 part 'single_habit.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: false)
 class SingleHabit extends _$SingleHabit {
   @override
   FutureOr<HabitModel> build(int id) async {
