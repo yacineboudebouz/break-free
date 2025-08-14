@@ -4,6 +4,7 @@ import 'package:bad_habit_killer/src/core/presentation/extensions/widget_ref_ext
 import 'package:bad_habit_killer/src/core/presentation/helpers/app_gaps.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
 import 'package:bad_habit_killer/src/core/presentation/utils/riverpod_framework.dart';
+import 'package:bad_habit_killer/src/core/presentation/widgets/animated_list/animated_list.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/app_scaffold.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/async_value_widget.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/interactive_layer/interactive_layer.dart';
@@ -14,6 +15,7 @@ import 'package:bad_habit_killer/src/features/home/providers/habit_controller.da
 import 'package:bad_habit_killer/src/features/home/providers/single_habit.dart';
 import 'package:bad_habit_killer/src/features/home/view/widgets/habit_widget.dart';
 import 'package:bad_habit_killer/src/features/home/view/widgets/relapse_button.dart';
+import 'package:bad_habit_killer/src/features/home/view/widgets/relapse_history_widget.dart';
 import 'package:bad_habit_killer/src/features/home/view/widgets/time_ticker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -156,6 +158,15 @@ class HabitDetailsView extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: Sizes.paddingH8),
               child: Divider(),
+            ),
+            Expanded(
+              child: AppAnimatedList(
+                itemBuilder: (_, index) {
+                  final relapse = habit.events[index];
+                  return RelapseHistoryWidget(event: relapse);
+                },
+                itemCount: habit.events.length,
+              ),
             ),
           ],
         ),

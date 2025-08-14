@@ -26,7 +26,7 @@ class HabitWidget extends StatelessWidget {
             tag: 'progress_${habit.id}',
             child: ProgressWidget(
               value: habit.progress,
-              color: DatabaseColors.fromString(habit.color),
+              color: habit.colorValue,
             ),
           ),
           gapW4,

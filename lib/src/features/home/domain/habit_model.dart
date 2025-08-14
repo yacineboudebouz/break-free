@@ -1,8 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:bad_habit_killer/src/core/presentation/extensions/datetime_ext.dart';
+import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
+import 'package:bad_habit_killer/src/features/home/domain/event_model.dart';
 import 'package:flutter/services.dart';
 
 import 'package:bad_habit_killer/src/core/presentation/helpers/database_colors.dart';
 import 'package:bad_habit_killer/src/features/home/domain/relapse_model.dart';
+import 'package:logger/logger.dart';
 
 class HabitModel {
   final int id;
@@ -91,6 +95,42 @@ class HabitModel {
   double get progress {
     final goalValue = goal.toDouble() * 86400;
     return (currentProgress / goalValue).clamp(0.0, 1.0);
+  }
+
+  List<EventModel>? _cachedEvents;
+
+  List<EventModel> get events {
+    if (_cachedEvents != null) {
+      return _cachedEvents!;
+    }
+
+    List<EventModel> list = [];
+    var prevDate = startDate;
+    list.add(
+      EventModel(
+        id: 999,
+        date: startDate,
+        type: EventType.firstDate,
+        note: "A new journey begins!".hardcoded,
+      ),
+    );
+    for (var relapse in relapses) {
+      list.add(
+        EventModel(
+          id: relapse.id,
+          date: relapse.date,
+          note:
+              relapse.note ??
+              'Streak before relapse : ${relapse.date.differenceFormatted(prevDate)}',
+          type: EventType.relapse,
+        ),
+      );
+      prevDate = relapse.date;
+    }
+    list.sort((a, b) => b.date.compareTo(a.date));
+
+    _cachedEvents = list;
+    return list;
   }
 
   static List<int> goals = [

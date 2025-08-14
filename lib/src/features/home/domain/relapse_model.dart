@@ -27,4 +27,9 @@ class RelapseModel {
       note: map['note'] != null ? map['note'] as String : null,
     );
   }
+
+  @override
+  String toString() {
+    return 'RelapseModel(id: $id, date: $date, note: $note)';
+  }
 }
