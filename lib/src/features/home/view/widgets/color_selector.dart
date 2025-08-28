@@ -1,9 +1,8 @@
 import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/providers/current_app_theme_provider.dart';
 import 'package:bad_habit_killer/src/core/presentation/helpers/database_colors.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
+import 'package:bad_habit_killer/src/core/presentation/utils/riverpod_framework.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 class ColorSelector extends HookConsumerWidget {
   const ColorSelector({super.key, this.onColorSelected});

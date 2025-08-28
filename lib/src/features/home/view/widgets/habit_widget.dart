@@ -1,7 +1,6 @@
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/helpers/app_gaps.dart';
-import 'package:bad_habit_killer/src/core/presentation/helpers/database_colors.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/progress_widget.dart';
 import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';

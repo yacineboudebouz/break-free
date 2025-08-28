@@ -3,10 +3,8 @@ import 'package:bad_habit_killer/src/core/presentation/extensions/datetime_ext.d
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:bad_habit_killer/src/features/home/domain/event_model.dart';
 import 'package:flutter/services.dart';
-
 import 'package:bad_habit_killer/src/core/presentation/helpers/database_colors.dart';
 import 'package:bad_habit_killer/src/features/home/domain/relapse_model.dart';
-import 'package:logger/logger.dart';
 
 class HabitModel {
   final int id;
@@ -128,7 +126,6 @@ class HabitModel {
       prevDate = relapse.date;
     }
     list.sort((a, b) => b.date.compareTo(a.date));
-
     _cachedEvents = list;
     return list;
   }
