@@ -10,6 +10,18 @@ class RelapseHistoryWidget extends StatelessWidget {
   // TODO: i have to add encapsulation layer for relapse to handle
   // relpases, notes, first date
   final EventModel event;
+
+  IconData get icon {
+    switch (event.type) {
+      case EventType.relapse:
+        return Icons.close;
+      case EventType.firstDate:
+        return Icons.star;
+      case EventType.note:
+        return Icons.close;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -58,7 +70,16 @@ class RelapseHistoryWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
+              IconButton(
+                onPressed: () {
+                  if (event.type == EventType.firstDate) {
+                    return null;
+                  } else {
+                    // Handle other event types
+                  }
+                },
+                icon: Icon(icon),
+              ),
             ],
           ),
         ),

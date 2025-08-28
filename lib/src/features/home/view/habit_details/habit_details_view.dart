@@ -1,4 +1,5 @@
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
+import 'package:bad_habit_killer/src/core/presentation/extensions/datetime_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/widget_ref_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/helpers/app_gaps.dart';
@@ -17,18 +18,30 @@ import 'package:bad_habit_killer/src/features/home/view/widgets/habit_widget.dar
 import 'package:bad_habit_killer/src/features/home/view/widgets/relapse_button.dart';
 import 'package:bad_habit_killer/src/features/home/view/widgets/relapse_history_widget.dart';
 import 'package:bad_habit_killer/src/features/home/view/widgets/time_ticker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 part 'habit_details_view_helper.dart';
 
-class HabitDetailsView extends HookConsumerWidget {
+class HabitDetailsView extends StatefulHookConsumerWidget {
   const HabitDetailsView({super.key, required this.id});
+
   final int id;
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final habitAsync = ref.watch(singleHabitProvider(id));
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _HabitDetailsViewState();
+}
+
+class _HabitDetailsViewState extends ConsumerState<HabitDetailsView> {
+  @override
+  Widget build(BuildContext context) {
+    final habitAsync = ref.watch(singleHabitProvider(widget.id));
     final controller = ref.watch(habitControllerProvider);
+    final noteController = useTextEditingController();
+    final relapseDate = useState<DateTime>(DateTime.now());
     ref.listenAndHandleState(habitControllerProvider);
+
     return AppScaffold(
       body: AsyncValueWidget(
         value: habitAsync,
@@ -65,7 +78,7 @@ class HabitDetailsView extends HookConsumerWidget {
                   child: SizedBox(
                     height: context.height * 0.3,
                     child: Hero(
-                      tag: 'progress_$id',
+                      tag: 'progress_${widget.id}',
                       child: ProgressWidget(
                         ringColor: Theme.of(context).cardColor,
                         strokeWidth: Sizes.borderWidth16,
@@ -120,7 +133,13 @@ class HabitDetailsView extends HookConsumerWidget {
                       color: habit.colorValue,
                       isLoading: controller.isLoading,
                       onPressed: () {
-                        _addRelapse(ref, habit);
+                        _addRelapse(
+                          ref,
+                          habit,
+                          context,
+                          relapseDate,
+                          noteController,
+                        );
                       },
                     ),
                   ),
