@@ -24,6 +24,8 @@ extension _CacheErrorExt on CacheException {
         'Failed to create habit'.hardcoded,
       CacheExceptionType.addRelapseFailed => 'Failed to add relapse'.hardcoded,
       CacheExceptionType.unknown => 'Unknown error occurred'.hardcoded,
+      CacheExceptionType.updateHabitFailed =>
+        'Failed to update habit'.hardcoded,
     };
   }
 }

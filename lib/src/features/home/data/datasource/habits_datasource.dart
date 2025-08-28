@@ -52,4 +52,13 @@ class HabitsDatasource {
   Future<int> addRelapse(AddRelapse addRelapse) async {
     return await database.insert(DatabaseTables.relapses, addRelapse.toMap());
   }
+
+  Future<void> updateHabit(HabitModel habit) async {
+    await database.update(
+      DatabaseTables.habits,
+      habit.toMap(),
+      where: 'id = ?',
+      whereArgs: [habit.id],
+    );
+  }
 }

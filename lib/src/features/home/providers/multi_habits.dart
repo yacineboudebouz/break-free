@@ -27,4 +27,17 @@ class MultiHabits extends _$MultiHabits {
       state = AsyncValue.data(updatedHabits);
     }
   }
+
+  void updateHabit(HabitModel habit) {
+    if (state.hasValue) {
+      final currentHabits = state.value!;
+      final updatedHabits = currentHabits.map((h) {
+        if (h.id == habit.id) {
+          return habit;
+        }
+        return h;
+      }).toList();
+      state = AsyncValue.data(updatedHabits);
+    }
+  }
 }

@@ -5,12 +5,17 @@ import 'package:bad_habit_killer/src/core/presentation/utils/riverpod_framework.
 import 'package:flutter/material.dart';
 
 class ColorSelector extends HookConsumerWidget {
-  const ColorSelector({super.key, this.onColorSelected});
+  const ColorSelector({
+    super.key,
+    this.onColorSelected,
+    this.selectedColorIndex,
+  });
 
   final ValueChanged<Color>? onColorSelected;
+  final int? selectedColorIndex;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedColor = useState<int>(0);
+    final selectedColor = useState<int>(selectedColorIndex ?? 0);
     final appColors = ref.watch(currentAppThemeModeProvider).appColors;
     const colors = DatabaseColors.colors;
     return SizedBox(

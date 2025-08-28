@@ -39,4 +39,8 @@ class DatabaseColors {
     if (color == Colors.purple) return 'purple';
     return 'grey';
   }
+
+  static int indexFromColor(Color color) {
+    return colors.indexOf(color);
+  }
 }

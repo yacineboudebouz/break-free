@@ -63,4 +63,11 @@ class HabitsRepository {
       note: addRelapse.note,
     );
   }
+
+  Future<void> updateHabit(HabitModel habit) async {
+    await executeWithErrorHandling(
+      () => habitsDatasource.updateHabit(habit),
+      specificErrorType: CacheExceptionType.updateHabitFailed,
+    );
+  }
 }

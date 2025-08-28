@@ -1,6 +1,8 @@
 import 'package:bad_habit_killer/src/core/config/routing/animations/transition_framework.dart';
 import 'package:bad_habit_killer/src/core/presentation/screens/error_builder_screen.dart';
+import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
 import 'package:bad_habit_killer/src/features/home/view/add_habit/add_habit_view.dart';
+import 'package:bad_habit_killer/src/features/home/view/edit_habit/edit_habit.dart';
 import 'package:bad_habit_killer/src/features/home/view/habit_details/habit_details_view.dart';
 import 'package:bad_habit_killer/src/features/home/view/home_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,7 +10,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'app_router.g.dart';
 
-enum AppRouter { home, addHabit, habitDetails }
+enum AppRouter { home, addHabit, habitDetails, editHabit }
 
 @riverpod
 GoRouter goRouter(Ref ref) {
@@ -40,6 +42,18 @@ GoRouter goRouter(Ref ref) {
                 child: HabitDetailsView(id: int.parse(habitId!)),
               );
             },
+            routes: [
+              GoRoute(
+                path: "/edit-habit",
+                name: AppRouter.editHabit.name,
+                pageBuilder: (_, state) {
+                  final habit = state.extra as HabitModel;
+                  return slideRightTransition(
+                    child: EditHabitView(habit: habit),
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),

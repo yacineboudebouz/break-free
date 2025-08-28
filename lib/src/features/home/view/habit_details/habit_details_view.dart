@@ -1,3 +1,4 @@
+import 'package:bad_habit_killer/src/core/config/routing/app_router.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/datetime_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
@@ -67,7 +68,16 @@ class _HabitDetailsViewState extends ConsumerState<HabitDetailsView> {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
-                    gapW48,
+                    IconButton(
+                      icon: Icon(Icons.edit, size: Sizes.icon28),
+                      onPressed: () {
+                        context.pushNamed(
+                          AppRouter.editHabit.name,
+                          extra: habit,
+                          pathParameters: {"habitId": habit.id.toString()},
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

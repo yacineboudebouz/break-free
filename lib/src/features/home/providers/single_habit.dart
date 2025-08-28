@@ -25,4 +25,16 @@ class SingleHabit extends _$SingleHabit {
         .read(multiHabitsProvider.notifier)
         .addRelapseToHabit(relapse, state.value!.id);
   }
+
+  void updateHabit(HabitModel habit) {
+    state = state.whenData((existingHabit) {
+      return existingHabit.copyWith(
+        name: habit.name,
+        startDate: habit.startDate,
+        description: habit.description,
+        color: habit.color,
+      );
+    });
+    ref.read(multiHabitsProvider.notifier).updateHabit(habit);
+  }
 }

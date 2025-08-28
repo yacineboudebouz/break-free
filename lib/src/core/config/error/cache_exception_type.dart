@@ -7,4 +7,5 @@ enum CacheExceptionType {
   createHabitFailed,
   addRelapseFailed,
   unknown,
+  updateHabitFailed,
 }

@@ -53,6 +53,16 @@ class HabitModel {
     relapses: relapses,
   );
 
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'start_date': startDate.toString(),
+      'description': description,
+      'color': color,
+    };
+  }
+
   Color get colorValue {
     return DatabaseColors.fromString(color);
   }
@@ -103,7 +113,11 @@ class HabitModel {
     }
 
     List<EventModel> list = [];
-    var prevDate = startDate;
+    final _relapses = relapses.toList();
+
+    // Sort relapses by ascending date for proper streak calculation
+    _relapses.sort((a, b) => a.date.compareTo(b.date));
+
     list.add(
       EventModel(
         id: 999,
@@ -112,20 +126,23 @@ class HabitModel {
         note: "A new journey begins!".hardcoded,
       ),
     );
-    for (var relapse in relapses) {
+    DateTime prevDate = startDate;
+    for (var relapse in _relapses) {
+      final streakDuration = relapse.date.difference(prevDate);
       list.add(
         EventModel(
           id: relapse.id,
           date: relapse.date,
           note:
               relapse.note ??
-              'Streak before relapse : ${relapse.date.differenceFormatted(prevDate)}',
+              'Streak before relapse: ${relapse.date.differenceFormatted(prevDate)}',
           type: EventType.relapse,
         ),
       );
       prevDate = relapse.date;
     }
     list.sort((a, b) => b.date.compareTo(a.date));
+
     _cachedEvents = list;
     return list;
   }

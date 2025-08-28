@@ -1,6 +1,7 @@
 import 'package:bad_habit_killer/src/core/presentation/utils/riverpod_framework.dart';
 import 'package:bad_habit_killer/src/features/home/data/repository/habits_repository.dart';
 import 'package:bad_habit_killer/src/features/home/domain/add_relapse.dart';
+import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
 import 'package:bad_habit_killer/src/features/home/providers/single_habit.dart';
 part 'habit_controller.g.dart';
 
@@ -18,6 +19,17 @@ class HabitController extends _$HabitController {
       ref
           .read(singleHabitProvider(addRelapse.habitId).notifier)
           .addRelapse(habit);
+      state = AsyncData(null);
+    } catch (e, tr) {
+      state = AsyncError(e, tr);
+    }
+  }
+
+  Future<void> updateHabit(HabitModel habit) async {
+    try {
+      state = AsyncLoading();
+      await ref.read(habitsRepositoryProvider).updateHabit(habit);
+      ref.read(singleHabitProvider(habit.id).notifier).updateHabit(habit);
       state = AsyncData(null);
     } catch (e, tr) {
       state = AsyncError(e, tr);
