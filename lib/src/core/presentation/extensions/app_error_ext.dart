@@ -26,6 +26,8 @@ extension _CacheErrorExt on CacheException {
       CacheExceptionType.unknown => 'Unknown error occurred'.hardcoded,
       CacheExceptionType.updateHabitFailed =>
         'Failed to update habit'.hardcoded,
+      CacheExceptionType.deleteHabitFailed =>
+        'Failed to delete habit'.hardcoded,
     };
   }
 }

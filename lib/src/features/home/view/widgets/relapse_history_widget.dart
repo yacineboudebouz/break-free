@@ -72,11 +72,7 @@ class RelapseHistoryWidget extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  if (event.type == EventType.firstDate) {
-                    return null;
-                  } else {
-                    // Handle other event types
-                  }
+                  if (event.type != EventType.firstDate) {}
                 },
                 icon: Icon(icon),
               ),

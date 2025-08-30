@@ -1,7 +1,9 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:bad_habit_killer/src/core/config/routing/app_router.dart';
 import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/providers/app_theme_provider.dart';
 import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/providers/current_app_theme_provider.dart';
 import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/utils/app_theme.dart';
+import 'package:bad_habit_killer/src/core/presentation/constants/app_assets.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/go_router_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
@@ -17,6 +19,7 @@ import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
 import 'package:bad_habit_killer/src/features/home/providers/multi_habits.dart';
 import 'package:bad_habit_killer/src/features/home/view/widgets/habit_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeView extends HookConsumerWidget {
   const HomeView({super.key});
@@ -106,6 +109,28 @@ class HomeView extends HookConsumerWidget {
             child: AsyncValueWidget<List<HabitModel>>(
               value: allHabits,
               data: (habits) {
+                if (habits.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Lottie.asset(
+                          AppAssets.notFound,
+                          repeat: true,
+                          height: context.height * 0.4,
+                        ),
+
+                        Text(
+                          'Add a new habit to get started!'.hardcoded,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleMedium!
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ).bounceInRight(),
+                        gapH64,
+                      ],
+                    ),
+                  );
+                }
                 return AppAnimatedList(
                   separatorBuilder: (context, index) => gapH16,
                   padding: EdgeInsets.symmetric(
@@ -114,15 +139,23 @@ class HomeView extends HookConsumerWidget {
                   ),
                   itemBuilder: (context, index) {
                     final habit = habits[index];
-                    return InteractiveLayer(
-                      onTap: () {
-                        context.goNamed(
-                          AppRouter.habitDetails.name,
-                          pathParameters: {'habitId': habit.id.toString()},
-                        );
+                    return Dismissible(
+                      key: Key('habit_${habit.id}'),
+                      onDismissed: (direction) {
+                        ref
+                            .read(multiHabitsProvider.notifier)
+                            .deleteHabit(habit.id);
                       },
-                      config: InteractionConfig.scaleIn,
-                      child: HabitWidget(habit: habit),
+                      child: InteractiveLayer(
+                        onTap: () {
+                          context.goNamed(
+                            AppRouter.habitDetails.name,
+                            pathParameters: {'habitId': habit.id.toString()},
+                          );
+                        },
+                        config: InteractionConfig.scaleIn,
+                        child: HabitWidget(habit: habit),
+                      ),
                     );
                   },
                   itemCount: habits.length,

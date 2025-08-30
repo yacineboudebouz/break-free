@@ -8,4 +8,5 @@ enum CacheExceptionType {
   addRelapseFailed,
   unknown,
   updateHabitFailed,
+  deleteHabitFailed,
 }

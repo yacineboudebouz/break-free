@@ -40,6 +40,6 @@ class _EagerInitialization extends ConsumerWidget {
     if (values.every((value) => value.hasValue || value.hasError)) {
       return child;
     }
-    return SplashScreen();
+    return SizedBox();
   }
 }

@@ -40,4 +40,15 @@ class MultiHabits extends _$MultiHabits {
       state = AsyncValue.data(updatedHabits);
     }
   }
+
+  Future<void> deleteHabit(int habitId) async {
+    await ref.watch(habitsRepositoryProvider).deleteHabit(habitId);
+    if (state.hasValue) {
+      final currentHabits = state.value!;
+      final updatedHabits = currentHabits
+          .where((h) => h.id != habitId)
+          .toList();
+      state = AsyncValue.data(updatedHabits);
+    }
+  }
 }

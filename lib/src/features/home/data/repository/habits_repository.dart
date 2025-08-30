@@ -70,4 +70,11 @@ class HabitsRepository {
       specificErrorType: CacheExceptionType.updateHabitFailed,
     );
   }
+
+  Future<void> deleteHabit(int habitId) async {
+    await executeWithErrorHandling(
+      () => habitsDatasource.deleteHabit(habitId),
+      specificErrorType: CacheExceptionType.deleteHabitFailed,
+    );
+  }
 }

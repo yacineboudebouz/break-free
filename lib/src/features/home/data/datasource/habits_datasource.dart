@@ -61,4 +61,17 @@ class HabitsDatasource {
       whereArgs: [habit.id],
     );
   }
+
+  Future<void> deleteHabit(int habitId) async {
+    await database.delete(
+      DatabaseTables.habits,
+      where: 'id = ?',
+      whereArgs: [habitId],
+    );
+    await database.delete(
+      DatabaseTables.relapses,
+      where: 'habit_id = ?',
+      whereArgs: [habitId],
+    );
+  }
 }

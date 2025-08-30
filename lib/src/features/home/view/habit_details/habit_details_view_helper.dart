@@ -42,7 +42,10 @@ void _addRelapse(
                   IconButton(
                     icon: const Icon(Icons.calendar_today_outlined),
                     onPressed: () async {
-                      final selectedDate = await _selectDateTime(context);
+                      final selectedDate = await _selectDateTime(
+                        context,
+                        habit.startDate,
+                      );
                       relapseDate.value = selectedDate;
                     },
                   ),
@@ -111,19 +114,23 @@ void _addRelapse(
   );
 }
 
-Future<DateTime> _selectDateTime(BuildContext context) async {
+Future<DateTime> _selectDateTime(
+  BuildContext context,
+  DateTime firstDate,
+) async {
   DateTime? selectedDate;
 
   final date = await showDatePicker(
     context: context,
     initialDate: DateTime.now(),
-    firstDate: DateTime(2000),
+    firstDate: firstDate,
     lastDate: DateTime.now(),
     initialEntryMode: DatePickerEntryMode.calendarOnly,
   );
   if (date != null) {
     final time = await showTimePicker(
       initialEntryMode: TimePickerEntryMode.dialOnly,
+      // ignore: use_build_context_synchronously
       context: context,
       initialTime: TimeOfDay.now(),
     );
