@@ -1,6 +1,5 @@
 import 'package:bad_habit_killer/src/app.dart';
 import 'package:bad_habit_killer/src/core/core_features/database/app_database.dart';
-import 'package:bad_habit_killer/src/core/presentation/screens/splash_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

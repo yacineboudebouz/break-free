@@ -171,16 +171,6 @@ class _HabitDetailsViewState extends ConsumerState<HabitDetailsView> {
                     "History".hardcoded,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Add Comment'.hardcoded,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: habit.colorValue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),

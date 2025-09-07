@@ -17,6 +17,7 @@ import 'package:bad_habit_killer/src/core/presentation/widgets/interactive_layer
 import 'package:bad_habit_killer/src/features/home/data/repository/habits_repository.dart';
 import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
 import 'package:bad_habit_killer/src/features/home/providers/multi_habits.dart';
+import 'package:bad_habit_killer/src/features/home/view/widgets/app_drawer.dart';
 import 'package:bad_habit_killer/src/features/home/view/widgets/habit_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -31,28 +32,7 @@ class HomeView extends HookConsumerWidget {
     final appColors = ref.watch(currentAppThemeModeProvider).appColors;
     return AppScaffold(
       scaffoldKey: drawerKey,
-      drawer: Drawer(
-        backgroundColor: appColors.scaffoldBGColor,
-        child: SizedBox.expand(
-          child: Column(
-            children: [
-              gapH32,
-              // this just for demo purposes
-              //TODO: implement a proper drawer and clean up this code
-              Switch(
-                value: ref.watch(currentAppThemeModeProvider).isDarkTheme,
-                onChanged: (value) {
-                  ref
-                      .read(appThemeNotifierProvider.notifier)
-                      .changeTheme(
-                        value ? AppThemeMode.dark : AppThemeMode.light,
-                      );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: AppDrawer(),
       body: Column(
         children: [
           Container(

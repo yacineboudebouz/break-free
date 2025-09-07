@@ -72,7 +72,9 @@ class RelapseHistoryWidget extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  if (event.type != EventType.firstDate) {}
+                  if (event.type != EventType.firstDate) {
+                    // TODO: Implement delete functionality
+                  }
                 },
                 icon: Icon(icon),
               ),
