@@ -14,8 +14,6 @@ class RelapseHistoryWidget extends StatelessWidget {
     required this.onTap,
   });
 
-  // TODO: i have to add encapsulation layer for relapse to handle
-  // relpases, notes, first date
   final EventModel event;
   final VoidCallback onTap;
 

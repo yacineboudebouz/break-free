@@ -3,7 +3,7 @@
      <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="bad_habit_killer"
+        android:label="Break Free"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

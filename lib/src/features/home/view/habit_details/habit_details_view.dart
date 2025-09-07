@@ -200,5 +200,3 @@ class _HabitDetailsViewState extends ConsumerState<HabitDetailsView> {
     );
   }
 }
-
-// TODO: this file is so huge, try to refactor it into smaller widgets or do something with it :)
