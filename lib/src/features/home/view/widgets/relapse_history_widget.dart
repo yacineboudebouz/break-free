@@ -1,15 +1,23 @@
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/datetime_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
+
 import 'package:bad_habit_killer/src/features/home/domain/event_model.dart';
+
 import 'package:flutter/material.dart';
 
 class RelapseHistoryWidget extends StatelessWidget {
-  const RelapseHistoryWidget({super.key, required this.event});
+  const RelapseHistoryWidget({
+    super.key,
+    required this.event,
+
+    required this.onTap,
+  });
 
   // TODO: i have to add encapsulation layer for relapse to handle
   // relpases, notes, first date
   final EventModel event;
+  final VoidCallback onTap;
 
   IconData get icon {
     switch (event.type) {
@@ -73,7 +81,7 @@ class RelapseHistoryWidget extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   if (event.type != EventType.firstDate) {
-                    // TODO: Implement delete functionality
+                    onTap();
                   }
                 },
                 icon: Icon(icon),

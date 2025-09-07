@@ -74,4 +74,12 @@ class HabitsDatasource {
       whereArgs: [habitId],
     );
   }
+
+  Future<void> deleteRelapse(int id) async {
+    await database.delete(
+      DatabaseTables.relapses,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }

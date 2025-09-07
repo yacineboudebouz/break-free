@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:bad_habit_killer/src/core/config/routing/app_router.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/datetime_ext.dart';
@@ -182,7 +183,12 @@ class _HabitDetailsViewState extends ConsumerState<HabitDetailsView> {
               child: AppAnimatedList(
                 itemBuilder: (_, index) {
                   final relapse = habit.events[index];
-                  return RelapseHistoryWidget(event: relapse);
+                  return RelapseHistoryWidget(
+                    event: relapse,
+                    onTap: () async {
+                      _deleteRelapse(ref, relapse.id, habit.id, context);
+                    },
+                  );
                 },
                 itemCount: habit.events.length,
               ),

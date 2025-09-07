@@ -57,6 +57,7 @@ class HomeView extends HookConsumerWidget {
                   Expanded(
                     child: TextField(
                       textAlignVertical: TextAlignVertical.center,
+                      onTapOutside: (event) => FocusScope.of(context).unfocus(),
                       decoration: InputDecoration(
                         hintText: 'Search habits'.hardcoded,
                         border: OutlineInputBorder(

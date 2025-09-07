@@ -120,7 +120,7 @@ class HabitModel {
 
     list.add(
       EventModel(
-        id: 999,
+        id: 9999999999999999,
         date: startDate,
         type: EventType.firstDate,
         note: "A new journey begins!".hardcoded,

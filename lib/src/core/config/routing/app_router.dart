@@ -5,12 +5,13 @@ import 'package:bad_habit_killer/src/features/home/view/add_habit/add_habit_view
 import 'package:bad_habit_killer/src/features/home/view/edit_habit/edit_habit.dart';
 import 'package:bad_habit_killer/src/features/home/view/habit_details/habit_details_view.dart';
 import 'package:bad_habit_killer/src/features/home/view/home_view.dart';
+import 'package:bad_habit_killer/src/features/settings/view/settings_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'app_router.g.dart';
 
-enum AppRouter { home, addHabit, habitDetails, editHabit }
+enum AppRouter { home, addHabit, habitDetails, editHabit, settings }
 
 @riverpod
 GoRouter goRouter(Ref ref) {
@@ -54,6 +55,13 @@ GoRouter goRouter(Ref ref) {
                 },
               ),
             ],
+          ),
+          GoRoute(
+            path: '/settings',
+            name: AppRouter.settings.name,
+            pageBuilder: (_, __) {
+              return slideRightTransition(child: const SettingsView());
+            },
           ),
         ],
       ),

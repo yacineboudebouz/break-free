@@ -1,12 +1,14 @@
+import 'package:bad_habit_killer/src/core/config/routing/app_router.dart';
 import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/providers/current_app_theme_provider.dart';
 import 'package:bad_habit_killer/src/core/presentation/constants/app_assets.dart';
-import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/helpers/app_gaps.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
 import 'package:bad_habit_killer/src/features/home/view/widgets/drawer_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends ConsumerWidget {
   const AppDrawer({super.key});
@@ -23,7 +25,7 @@ class AppDrawer extends ConsumerWidget {
           padding: EdgeInsets.symmetric(horizontal: Sizes.paddingH16),
           child: Column(
             children: [
-              gapH32,
+              gapH64,
               Image.asset(AppAssets.freedom),
               gapH24,
               Text(
@@ -36,16 +38,35 @@ class AppDrawer extends ConsumerWidget {
               DrawerItemWidget(
                 title: "Settings".hardcoded,
                 icon: Icons.settings_outlined,
+                onTap: () {
+                  context.pushNamed(AppRouter.settings.name);
+                },
               ),
               gapH12,
               DrawerItemWidget(
                 title: "Support us !",
                 icon: Icons.diamond_outlined,
+                onTap: () async {
+                  final url = Uri.parse(
+                    'https://github.com/yacineboudebouz/break-free',
+                  );
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url, mode: LaunchMode.externalApplication);
+                  }
+                },
               ),
               gapH12,
               DrawerItemWidget(
                 title: "Help and feedback",
                 icon: Icons.feedback_outlined,
+                onTap: () async {
+                  final url = Uri.parse(
+                    'mailto:y_boudebouz@estin.dz?subject=Break Free - Help and Feedback',
+                  );
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url);
+                  }
+                },
               ),
             ],
           ),

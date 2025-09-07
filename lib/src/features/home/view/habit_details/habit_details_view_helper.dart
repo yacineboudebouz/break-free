@@ -148,3 +148,50 @@ Future<DateTime> _selectDateTime(
   }
   return selectedDate ?? DateTime.now();
 }
+
+void _deleteRelapse(
+  WidgetRef ref,
+  int relapseId,
+  int habitId,
+  BuildContext context,
+) {
+  showGeneralDialog(
+    context: context,
+    pageBuilder: (context, animation, secondaryAnimation) {
+      return Container();
+    },
+    transitionBuilder: (context, animation, secondaryAnimation, child) {
+      return ScaleTransition(
+        scale: CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+        child: AlertDialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          title: Text(
+            "Are you sure you want to delete this relapse? this cannot be undone"
+                .hardcoded,
+            style: Theme.of(context).textTheme.bodySmall,
+          ).fadeIn(),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text("Yes".hardcoded),
+                onTap: () {
+                  ref
+                      .read(habitControllerProvider.notifier)
+                      .deleteRelapse(relapseId, habitId);
+                  context.pop();
+                },
+              ).fadeIn(delay: Duration(milliseconds: 200)),
+              ListTile(
+                title: Text("No".hardcoded),
+                onTap: () {
+                  context.pop();
+                },
+              ).fadeIn(delay: Duration(milliseconds: 400)),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}

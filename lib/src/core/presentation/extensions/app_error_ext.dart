@@ -28,6 +28,8 @@ extension _CacheErrorExt on CacheException {
         'Failed to update habit'.hardcoded,
       CacheExceptionType.deleteHabitFailed =>
         'Failed to delete habit'.hardcoded,
+      CacheExceptionType.deleteRelapseFailed =>
+        'Failed to delete relapse'.hardcoded,
     };
   }
 }

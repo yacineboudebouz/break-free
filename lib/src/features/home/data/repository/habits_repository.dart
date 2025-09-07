@@ -77,4 +77,11 @@ class HabitsRepository {
       specificErrorType: CacheExceptionType.deleteHabitFailed,
     );
   }
+
+  Future<void> deleteRelapse(int id) async {
+    await executeWithErrorHandling(
+      () => habitsDatasource.deleteRelapse(id),
+      specificErrorType: CacheExceptionType.deleteRelapseFailed,
+    );
+  }
 }

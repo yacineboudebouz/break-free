@@ -51,4 +51,20 @@ class MultiHabits extends _$MultiHabits {
       state = AsyncValue.data(updatedHabits);
     }
   }
+
+  void deleteRelapseFromHabit(int relapseId, int habitId) {
+    if (state.hasValue) {
+      final currentHabits = state.value!;
+      final updatedHabits = currentHabits.map((habit) {
+        if (habit.id == habitId) {
+          final updatedRelapses = habit.relapses
+              .where((relapse) => relapse.id != relapseId)
+              .toList();
+          return habit.copyWith(relapses: updatedRelapses);
+        }
+        return habit;
+      }).toList();
+      state = AsyncValue.data(updatedHabits);
+    }
+  }
 }

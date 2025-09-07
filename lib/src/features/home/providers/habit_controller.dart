@@ -35,4 +35,15 @@ class HabitController extends _$HabitController {
       state = AsyncError(e, tr);
     }
   }
+
+  Future<void> deleteRelapse(int relapseId, int habitId) async {
+    try {
+      state = AsyncLoading();
+      await ref.read(habitsRepositoryProvider).deleteRelapse(relapseId);
+      ref.read(singleHabitProvider(habitId).notifier).deleteRelapse(relapseId);
+      state = AsyncData(null);
+    } catch (e, tr) {
+      state = AsyncError(e, tr);
+    }
+  }
 }
