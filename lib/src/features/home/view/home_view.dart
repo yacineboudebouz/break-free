@@ -1,8 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:bad_habit_killer/src/core/config/routing/app_router.dart';
-import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/providers/app_theme_provider.dart';
+
 import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/providers/current_app_theme_provider.dart';
-import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/utils/app_theme.dart';
+
 import 'package:bad_habit_killer/src/core/presentation/constants/app_assets.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/go_router_ext.dart';

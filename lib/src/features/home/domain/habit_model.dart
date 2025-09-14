@@ -113,6 +113,7 @@ class HabitModel {
     }
 
     List<EventModel> list = [];
+    // ignore: no_leading_underscores_for_local_identifiers
     final _relapses = relapses.toList();
 
     // Sort relapses by ascending date for proper streak calculation
@@ -128,7 +129,7 @@ class HabitModel {
     );
     DateTime prevDate = startDate;
     for (var relapse in _relapses) {
-      final streakDuration = relapse.date.difference(prevDate);
+      // final streakDuration = relapse.date.difference(prevDate);
       list.add(
         EventModel(
           id: relapse.id,
