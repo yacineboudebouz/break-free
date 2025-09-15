@@ -1,5 +1,6 @@
 import 'package:bad_habit_killer/src/core/config/routing/animations/transition_framework.dart';
 import 'package:bad_habit_killer/src/core/presentation/screens/error_builder_screen.dart';
+import 'package:bad_habit_killer/src/features/help/view/help_view.dart';
 import 'package:bad_habit_killer/src/features/home/domain/habit_model.dart';
 import 'package:bad_habit_killer/src/features/home/view/add_habit/add_habit_view.dart';
 import 'package:bad_habit_killer/src/features/home/view/edit_habit/edit_habit.dart';
@@ -11,7 +12,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'app_router.g.dart';
 
-enum AppRouter { home, addHabit, habitDetails, editHabit, settings }
+enum AppRouter { home, addHabit, habitDetails, editHabit, settings, help }
 
 @riverpod
 GoRouter goRouter(Ref ref) {
@@ -61,6 +62,13 @@ GoRouter goRouter(Ref ref) {
             name: AppRouter.settings.name,
             pageBuilder: (_, __) {
               return slideRightTransition(child: const SettingsView());
+            },
+          ),
+          GoRoute(
+            path: '/help',
+            name: AppRouter.help.name,
+            pageBuilder: (_, __) {
+              return slideRightTransition(child: const HelpView());
             },
           ),
         ],

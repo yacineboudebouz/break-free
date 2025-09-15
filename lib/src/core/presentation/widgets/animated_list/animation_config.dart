@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 enum AnimationType {
@@ -72,6 +73,34 @@ class AnimationConfig {
   static const slideLeftFade = AnimationConfig(
     type: AnimationType.slideLeft,
     curve: Curves.easeOutCubic,
-    slideDistance: 50.0,
+    slideDistance: 100.0,
   );
+
+  AnimationConfig copyWith({
+    AnimationType? type,
+    Curve? curve,
+    Duration? duration,
+    int? staggerDelay,
+    double? slideDistance,
+    double? initialScale,
+    double? finalScale,
+    double? initialOpacity,
+    double? finalOpacity,
+    double? rotationAngle,
+    Widget Function(Widget child, double animationValue)? customBuilder,
+  }) {
+    return AnimationConfig(
+      type: type ?? this.type,
+      curve: curve ?? this.curve,
+      duration: duration ?? this.duration,
+      staggerDelay: staggerDelay ?? this.staggerDelay,
+      slideDistance: slideDistance ?? this.slideDistance,
+      initialScale: initialScale ?? this.initialScale,
+      finalScale: finalScale ?? this.finalScale,
+      initialOpacity: initialOpacity ?? this.initialOpacity,
+      finalOpacity: finalOpacity ?? this.finalOpacity,
+      rotationAngle: rotationAngle ?? this.rotationAngle,
+      customBuilder: customBuilder ?? this.customBuilder,
+    );
+  }
 }

@@ -56,8 +56,18 @@ class AppDrawer extends ConsumerWidget {
                 },
               ),
               gapH12,
+
               DrawerItemWidget(
-                title: "Help and feedback",
+                title: "Help".hardcoded,
+                icon: Icons.help_outline,
+                onTap: () {
+                  context.pushNamed(AppRouter.help.name);
+                },
+              ),
+              gapH12,
+
+              DrawerItemWidget(
+                title: "Feedback",
                 icon: Icons.feedback_outlined,
                 onTap: () async {
                   final url = Uri.parse(
@@ -68,6 +78,7 @@ class AppDrawer extends ConsumerWidget {
                   }
                 },
               ),
+              gapH12,
             ],
           ),
         ),

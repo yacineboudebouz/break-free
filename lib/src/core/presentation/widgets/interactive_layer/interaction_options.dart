@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'interactive_layer.dart';
 
 enum InteractionType { none, scaleIn, scaleOut, glow, lift, fade, bounce }
@@ -45,4 +46,24 @@ class InteractionConfig {
   );
 
   static const fade = InteractionConfig(type: InteractionType.fade);
+
+  InteractionConfig copyWith({
+    InteractionType? type,
+    Duration? duration,
+    Curve? curve,
+    double? intensity,
+    Color? glowColor,
+    double? glowRadius,
+    Offset? liftOffset,
+  }) {
+    return InteractionConfig(
+      type: type ?? this.type,
+      duration: duration ?? this.duration,
+      curve: curve ?? this.curve,
+      intensity: intensity ?? this.intensity,
+      glowColor: glowColor ?? this.glowColor,
+      glowRadius: glowRadius ?? this.glowRadius,
+      liftOffset: liftOffset ?? this.liftOffset,
+    );
+  }
 }

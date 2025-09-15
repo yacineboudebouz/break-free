@@ -22,7 +22,9 @@ class DrawerItemWidget extends StatelessWidget {
     final theme = Theme.of(context);
     return InteractiveLayer(
       onTap: onTap,
-      config: InteractionConfig.scaleIn,
+      config: InteractionConfig.scaleIn.copyWith(
+        duration: const Duration(milliseconds: 50),
+      ),
       child: Container(
         height: context.height * 0.07,
         width: double.infinity,

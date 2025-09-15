@@ -18,6 +18,6 @@ class ThemeRepository {
   }
 
   String getThemeMode() {
-    return _localStorageService.getThemeMode() ?? AppThemeMode.dark.name;
+    return _localStorageService.getThemeMode() ?? AppThemeMode.light.name;
   }
 }
