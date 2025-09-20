@@ -6,6 +6,15 @@ extension Router on BuildContext {
     GoRouter.of(this).goNamed(name, pathParameters: pathParameters);
   }
 
+  void goReplaceNamed(
+    String name, {
+    Map<String, String> pathParameters = const {},
+  }) {
+    GoRouter.of(
+      this,
+    ).pushReplacementNamed(name, pathParameters: pathParameters);
+  }
+
   void popN(int n) {
     for (var i = 0; i < n; i++) {
       GoRouter.of(this).pop();

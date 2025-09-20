@@ -6,20 +6,40 @@ import 'package:bad_habit_killer/src/features/home/view/add_habit/add_habit_view
 import 'package:bad_habit_killer/src/features/home/view/edit_habit/edit_habit.dart';
 import 'package:bad_habit_killer/src/features/home/view/habit_details/habit_details_view.dart';
 import 'package:bad_habit_killer/src/features/home/view/home_view.dart';
+import 'package:bad_habit_killer/src/features/onboarding/view/controller/onboarding_controller.dart';
+import 'package:bad_habit_killer/src/features/onboarding/view/onboarding_view.dart';
 import 'package:bad_habit_killer/src/features/settings/view/settings_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'app_router.g.dart';
 
-enum AppRouter { home, addHabit, habitDetails, editHabit, settings, help }
+enum AppRouter {
+  home,
+  addHabit,
+  habitDetails,
+  editHabit,
+  settings,
+  help,
+  onboarding,
+}
 
 @riverpod
 GoRouter goRouter(Ref ref) {
+  final isOnboardingComplete = ref
+      .watch(onboardingControllerProvider.notifier)
+      .isVisitedOnboarding; // await ref.read
   return GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: '/',
+    initialLocation: '/onboarding',
     routes: [
+      GoRoute(
+        path: '/onboarding',
+        name: AppRouter.onboarding.name,
+        pageBuilder: (_, __) {
+          return fadeTransition(child: OnboardingView());
+        },
+      ),
       GoRoute(
         path: '/',
         name: AppRouter.home.name,

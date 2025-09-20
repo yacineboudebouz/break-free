@@ -8,11 +8,13 @@ class AppButton extends StatelessWidget {
     this.isLoading = false,
     required this.text,
     required this.onPressed,
+    this.color,
   });
 
   final bool isLoading;
   final String text;
   final VoidCallback onPressed;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class AppButton extends StatelessWidget {
       onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
         minimumSize: Size(double.infinity, Sizes.marginH64),
+        backgroundColor: color,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Sizes.radius12),
         ),

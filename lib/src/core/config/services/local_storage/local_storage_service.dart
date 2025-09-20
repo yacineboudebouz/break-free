@@ -23,4 +23,15 @@ class LocalStorageService {
   String? getThemeMode() {
     return _sharedPreferences.getString(LocalStorageKeys.themeMode);
   }
+
+  Future<void> saveOnboardingCompleted(bool completed) async {
+    await _sharedPreferences.setBool(
+      LocalStorageKeys.onboardingCompleted,
+      completed,
+    );
+  }
+
+  bool? getOnboardingCompleted() {
+    return _sharedPreferences.getBool(LocalStorageKeys.onboardingCompleted);
+  }
 }
