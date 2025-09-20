@@ -31,7 +31,7 @@ GoRouter goRouter(Ref ref) {
       .isVisitedOnboarding; // await ref.read
   return GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: '/onboarding',
+    initialLocation: isOnboardingComplete ? '/' : '/onboarding',
     routes: [
       GoRoute(
         path: '/onboarding',
