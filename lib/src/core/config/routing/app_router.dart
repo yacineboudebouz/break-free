@@ -27,7 +27,7 @@ enum AppRouter {
 @riverpod
 GoRouter goRouter(Ref ref) {
   final isOnboardingComplete = ref
-      .watch(onboardingControllerProvider.notifier)
+      .read(onboardingControllerProvider.notifier)
       .isVisitedOnboarding; // await ref.read
   return GoRouter(
     debugLogDiagnostics: true,

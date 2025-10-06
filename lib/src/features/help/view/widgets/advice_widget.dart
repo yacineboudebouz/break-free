@@ -53,7 +53,6 @@ class _AdviceWidgetState extends State<AdviceWidget> {
                 Text(
                   widget.advice.title,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
