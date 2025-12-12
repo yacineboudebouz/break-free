@@ -34,7 +34,16 @@ class AppDrawer extends ConsumerWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              gapH24,
+
+              gapH12,
+              DrawerItemWidget(
+                title: "Skills (10,000 Hours)".hardcoded,
+                icon: Icons.emoji_events_outlined,
+                onTap: () {
+                  context.pushNamed(AppRouter.skills.name);
+                },
+              ),
+              gapH12,
               DrawerItemWidget(
                 title: "Settings".hardcoded,
                 icon: Icons.settings_outlined,

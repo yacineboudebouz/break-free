@@ -21,4 +21,9 @@ extension Format on DateTime {
       return "${diff.inMinutes} minutes ago";
     }
   }
+
+  // Get date at start of day (00:00:00)
+  DateTime get startOfDay {
+    return DateTime(year, month, day);
+  }
 }

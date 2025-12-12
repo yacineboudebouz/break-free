@@ -22,6 +22,8 @@ class DatabaseTables {
   static const String habits = "habits";
   static const String relapses = "relapses";
   static const String notes = "notes";
+  static const String skills = "skills";
+  static const String practiceSessions = "practice_sessions";
 }
 
 class AppDatabase {
@@ -107,6 +109,26 @@ class AppDatabase {
         FOREIGN KEY (habit_id) REFERENCES habits (id) ON DELETE CASCADE
       )
     ''');
+    await db.execute('''
+      CREATE TABLE ${DatabaseTables.skills} (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        start_date TEXT NOT NULL,
+        description TEXT,
+        color TEXT NOT NULL,
+        target_hours INTEGER NOT NULL DEFAULT 10000
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE ${DatabaseTables.practiceSessions} (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        skill_id INTEGER NOT NULL,
+        practice_date TEXT NOT NULL,
+        duration_minutes INTEGER NOT NULL,
+        note TEXT,
+        FOREIGN KEY (skill_id) REFERENCES skills (id) ON DELETE CASCADE
+      )
+    ''');
 
     /// since i am going to refetch the data everytime
     /// and the join is is expensive operation
@@ -115,6 +137,9 @@ class AppDatabase {
       'CREATE INDEX idx_relapses_habit_id ON relapses(habit_id)',
     );
     await db.execute('CREATE INDEX idx_notes_habit_id ON notes(habit_id)');
+    await db.execute(
+      'CREATE INDEX idx_practice_sessions_skill_id ON practice_sessions(skill_id)',
+    );
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
