@@ -133,9 +133,13 @@ void _addPracticeSession(
               TextButton(
                 onPressed: () {
                   context.pop();
-                  noteController.clear();
                 },
-                child: Text("Cancel".hardcoded),
+                child: Text(
+                  'Cancel'.hardcoded,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+                ),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -143,17 +147,22 @@ void _addPracticeSession(
                     skillId: skill.id,
                     practiceDate: practiceDate.value,
                     durationMinutes: durationMinutes.value,
-                    note: noteController.text.isEmpty
+                    note: noteController.text.trim().isEmpty
                         ? null
-                        : noteController.text,
+                        : noteController.text.trim(),
                   );
                   ref
                       .read(skillControllerProvider.notifier)
                       .addPracticeSession(session);
                   context.pop();
-                  noteController.clear();
                 },
-                child: Text("Log Session".hardcoded),
+                child: Text(
+                  'Log Session'.hardcoded,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: skill.colorValue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ],
           );
