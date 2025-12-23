@@ -74,7 +74,7 @@ class SettingsView extends ConsumerWidget {
                     contentPadding: EdgeInsets.zero,
                     title: Text("App version".hardcoded),
                     leading: Icon(Icons.info, size: Sizes.icon28),
-                    subtitle: Text("1.0.0"),
+                    subtitle: Text("1.1.0"),
                   ),
                 ],
               ),
