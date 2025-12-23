@@ -194,6 +194,9 @@ class _EditSkillViewState extends ConsumerState<EditSkillView> {
                       ),
                       gapH8,
                       ColorSelector(
+                        selectedColorIndex: DatabaseColors.indexFromColor(
+                          currentColor.value,
+                        ),
                         onColorSelected: (value) {
                           currentColor.value = value;
                         },

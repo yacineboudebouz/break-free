@@ -39,6 +39,9 @@ void _addPracticeSession(
                       ),
                       Expanded(
                         child: Slider(
+                          activeColor: skill.colorValue,
+                          thumbColor: skill.colorValue,
+
                           value: durationMinutes.value.toDouble(),
                           min: 5,
                           max: 480,
