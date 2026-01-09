@@ -3,7 +3,6 @@ import 'package:bad_habit_killer/src/core/config/routing/app_router.dart';
 import 'package:bad_habit_killer/src/core/core_features/theme/presentaion/providers/current_app_theme_provider.dart';
 import 'package:bad_habit_killer/src/core/presentation/constants/app_assets.dart';
 import 'package:bad_habit_killer/src/core/presentation/extensions/context_ext.dart';
-
 import 'package:bad_habit_killer/src/core/presentation/extensions/string_ext.dart';
 import 'package:bad_habit_killer/src/core/presentation/helpers/app_gaps.dart';
 import 'package:bad_habit_killer/src/core/presentation/styles/sizes.dart';
@@ -12,7 +11,6 @@ import 'package:bad_habit_killer/src/core/presentation/widgets/animated_list/ani
 import 'package:bad_habit_killer/src/core/presentation/widgets/app_scaffold.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/async_value_widget.dart';
 import 'package:bad_habit_killer/src/core/presentation/widgets/interactive_layer/interactive_layer.dart';
-import 'package:bad_habit_killer/src/features/home/view/home_view.dart';
 import 'package:bad_habit_killer/src/features/skills/data/repository/skills_repository.dart';
 import 'package:bad_habit_killer/src/features/skills/domain/skill_model.dart';
 import 'package:bad_habit_killer/src/features/skills/providers/multi_skills.dart';
